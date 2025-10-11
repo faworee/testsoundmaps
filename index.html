@@ -1042,12 +1042,12 @@ h1 {
     z-index: 2;
 }
 
-.favorite-btn-abs {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
+.map-artist .favorite-btn {
+    position: static;
+    font-size: 1.5em;
+    margin-left: 8px;
+    padding: 0;
+    line-height: 1;
 }
 
 .star-rating {
@@ -3030,11 +3030,11 @@ function createMapCard(m) {
 card.innerHTML = `
     ${newTagHtml}
     <div class="map-content">
-        <div class="map-artist">
-            <span class="star-rating-abs">${starRatingHtml}</span>
-            <span class="artist-name">${formattedArtistName}</span>
-            <span class="favorite-btn-abs">${favoriteHtml}</span>
-        </div>
+  <div class="map-artist">
+    <span class="star-rating-abs">${starRatingHtml}</span>
+    <span class="artist-name">${formattedArtistName}</span>
+    ${favoriteHtml}
+</div>
         <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
         <div class="map-mapper">Mapped by: ${m.mapper}</div>
         <div class="map-difficulty">Difficulty: ${m.difficulty}</div>
