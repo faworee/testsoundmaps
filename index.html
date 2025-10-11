@@ -2134,9 +2134,6 @@ const durationMaxInput = document.getElementById('duration-max-input');
 const durationTrack = document.getElementById('duration-track');
 const notesMinThumb = document.getElementById('notes-min-thumb');
 const notesMaxThumb = document.getElementById('notes-max-thumb');
-const notesMinInput = document.getElementById('notes-min-input');
-const notesMaxInput = document.getElementById('notes-max-input');
-const notesTrack = document.getElementById('notes-track');
 
 // Settings Dropdown (Menu)
 const settingsToggle = document.getElementById('settings-toggle');
@@ -2225,9 +2222,8 @@ document.addEventListener('click', (e) => {
 const defaultSortOption = document.querySelector('.sort-option[data-mode="difficulty-asc"]');
 if (defaultSortOption) {
     defaultSortOption.classList.add('active');
-}-min-input');
-const notesMaxInput = document.getElementById('notes-max-input');
-const notesTrack = document.getElementById('notes-track');
+}
+const notesMinInput = document.getElementById('notes-min-input');
 
 // Random Map Button
 // (Removed - now in menu)
