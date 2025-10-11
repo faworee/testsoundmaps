@@ -923,10 +923,10 @@ h1 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-favorite-btn {
+.favorite-btn {
     position: absolute;
     top: 10px;
-    right: 45px; 
+    right: 20px; 
     background: none;
     border: none;
     cursor: pointer;
@@ -935,7 +935,11 @@ favorite-btn {
     transition: transform 0.2s;
     padding: 5px;
     line-height: 1;
-    color: #ff3b3b; 
+    color: #ff3b3b; /* Red color */
+}
+.favorite-btn .heart-outline,
+.favorite-btn .heart-filled {
+    color: #ff3b3b;
 }
 
 .favorite-btn:hover {
@@ -2199,7 +2203,7 @@ randomMapBtn.addEventListener('click', () => {
         return;
     }
     const randomMap = maps[Math.floor(Math.random() * maps.length)];
-    copyLink(randomMap.link, randomMapBtn);
+    copyLink(randomMap.link, randomMapBtn, randomMap); 
 });
 
 favoritesCheckbox.addEventListener('change', () => {
