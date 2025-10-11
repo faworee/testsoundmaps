@@ -1016,38 +1016,38 @@ h1 {
 }
 
 .map-artist {
+    position: relative;
+    width: 100%;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    width: 100%;
-    margin-bottom: 5px;
 }
 
 .map-artist .artist-name {
-    color: #ffd700;
+    margin: 0 auto;
+    text-align: center;
     font-size: 0.9em;
     font-weight: bold;
-    flex: 0 1 auto;
-    margin: 0;
-    padding: 0;
-    min-width: 0;
-    text-align: center;
-    display: block;
+    color: #ffd700;
+    width: 100%;
+    z-index: 1;
 }
 
-
-.map-artist .favorite-btn {
-    position: static;
-    font-size: 1.5em;
-    margin-left: 16px;
-    padding: 0;
-    line-height: 1;
+.star-rating-abs {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
 }
 
-.map-artist .star-rating {
-    position: static;
-    margin: 0;
+.favorite-btn-abs {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
 }
 
 .star-rating {
@@ -3030,11 +3030,11 @@ function createMapCard(m) {
 card.innerHTML = `
     ${newTagHtml}
     <div class="map-content">
-      <div class="map-artist">
-    ${starRatingHtml}
-    <span class="artist-name">${formattedArtistName}</span>
-    ${favoriteHtml}
-</div>
+        <div class="map-artist">
+            <span class="star-rating-abs">${starRatingHtml}</span>
+            <span class="artist-name">${formattedArtistName}</span>
+            <span class="favorite-btn-abs">${favoriteHtml}</span>
+        </div>
         <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
         <div class="map-mapper">Mapped by: ${m.mapper}</div>
         <div class="map-difficulty">Difficulty: ${m.difficulty}</div>
