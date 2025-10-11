@@ -209,13 +209,13 @@ body {
 }
 
 .performance-toggle.active {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    background:     linear-gradient(90deg, #4facfe, #f093fb);
     color: white;
 }
 
 h1 {
     font-size: 3em;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    background:  linear-gradient(90deg, #4facfe, #f093fb);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -521,7 +521,7 @@ h1 {
 }
 
 .filter-section h3 {
-    color: #4facfe;
+    background: linear-gradient(90deg, #4facfe, #f093fb);
     font-size: 1.1em;
     margin-bottom: 10px;
 }
@@ -601,7 +601,7 @@ h1 {
 .slider-track {
     position: absolute;
     height: 6px;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    background: linear-gradient(90deg, #4facfe, #f093fb);
     border-radius: 3px;
     top: 0;
 }
@@ -614,7 +614,8 @@ h1 {
     position: absolute;
     width: 20px;
     height: 20px;
-    background: #4facfe;
+    background:   linear-gradient(90deg, #4facfe, #f093fb);
+
     border: 2px solid white;
     border-radius: 50%;
     cursor: pointer;
@@ -1017,10 +1018,11 @@ h1 {
 .map-artist {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     min-height: 40px;
     margin-bottom: 5px;
+    gap: 10px;
 }
 .artist-side {
     display: flex;
@@ -1038,18 +1040,19 @@ h1 {
     min-width: 0;
 }
 
+
+
 .artist-name {
     text-align: center;
     font-size: 0.9em;
     font-weight: bold;
     color: #ffd700;
     margin: 0;
-    padding: 0;        
-    display: block;
-    width: 100%;
-    white-space: nowrap;  
-    overflow: hidden;   
+    padding: 0 10px;
+    flex: 1;
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .artist-left .star-rating,
@@ -1494,7 +1497,8 @@ h1 {
 }
 
 .load-more-btn {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    background:    linear-gradient(90deg, #4facfe, #f093fb);
+
     color: white;
     border: none;
     border-radius: 25px;
