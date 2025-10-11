@@ -162,7 +162,7 @@ body {
     top: 100%;
     right: 0;
     background-color: #222;
-    min-width: 200px;
+    min-width: 220px;
     box-shadow: 0px 8px 20px rgba(0,0,0,0.4);
     z-index: 1000;
     border-radius: 15px;
@@ -185,6 +185,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    text-decoration: none;
+    color: white;
 }
 
 .settings-option:hover {
@@ -194,6 +196,12 @@ body {
 .settings-option.active {
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     color: white;
+}
+
+.settings-divider {
+    height: 1px;
+    background: #444;
+    margin: 10px 0;
 }
 
 @media (max-width: 768px) {
@@ -214,17 +222,16 @@ body {
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.5em;
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 30px;
+    margin: 0;
 }
 
 @media (max-width: 768px) {
     h1 {
-        font-size: 2em;
-        margin-bottom: 20px;
+        font-size: 1.8em;
     }
 }
 
@@ -1548,25 +1555,28 @@ h1 {
 </head>
 
 <body>
-<div class="header-container">
-    <div class="header-left">
-        <a href="/SoundSpaceCustoms/Info" class="header-button info-button">Info</a>
-        <button class="header-button random-button" id="random-map-btn">Random Map</button>
-    </div>
-    <div class="header-right">
-        <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="header-button discord-button">Submit Map</a>
-        <div class="settings-dropdown">
-            <button class="settings-toggle" id="settings-toggle">⚙ Settings</button>
-            <div class="settings-menu" id="settings-menu">
-                <div class="settings-option" id="quality-toggle">
-                    <span>🎨 Low Quality Mode</span>
-                </div>
+<h1>Sound Space Custom Maps</h1>
+
+<div class="header-container" style="margin-top: 20px; justify-content: center;">
+    <div class="settings-dropdown">
+        <button class="settings-toggle" id="settings-toggle">☰ Menu</button>
+        <div class="settings-menu" id="settings-menu">
+            <a href="/SoundSpaceCustoms/Info" class="settings-option">
+                <span>ℹ️ Info</span>
+            </a>
+            <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="settings-option">
+                <span>📤 Submit Map</span>
+            </a>
+            <div class="settings-option" id="random-map-option">
+                <span>🎲 Random Map</span>
+            </div>
+            <div class="settings-divider"></div>
+            <div class="settings-option" id="quality-toggle">
+                <span>🎨 Low Quality Mode</span>
             </div>
         </div>
     </div>
 </div>
-
-<h1>Sound Space Custom Maps</h1>
 
 <div id="search-container">
     <input type="text" id="search-bar" placeholder="Search maps, artists, mappers or GitHub links...">
@@ -2117,7 +2127,6 @@ const loadMoreContainer = document.getElementById('load-more-container');
 const scrollIndicator = document.getElementById('scroll-indicator');
 const newMapsCheckbox = document.getElementById('new-maps-only');
 const favoritesCheckbox = document.getElementById('favorites-only');
-const randomMapBtn = document.getElementById('random-map-btn');
 const durationMinThumb = document.getElementById('duration-min-thumb');
 const durationMaxThumb = document.getElementById('duration-max-thumb');
 const durationMinInput = document.getElementById('duration-min-input');
@@ -2129,14 +2138,31 @@ const notesMinInput = document.getElementById('notes-min-input');
 const notesMaxInput = document.getElementById('notes-max-input');
 const notesTrack = document.getElementById('notes-track');
 
-// Settings Dropdown
+// Settings Dropdown (Menu)
 const settingsToggle = document.getElementById('settings-toggle');
 const settingsMenu = document.getElementById('settings-menu');
 const qualityToggle = document.getElementById('quality-toggle');
+const randomMapOption = document.getElementById('random-map-option');
 
 settingsToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     settingsMenu.classList.toggle('show');
+});
+
+// Random Map from Menu
+randomMapOption.addEventListener('click', () => {
+    if (maps.length === 0) {
+        showPopup('No maps available!', true);
+        return;
+    }
+    
+    const randomMap = maps[Math.floor(Math.random() * maps.length)];
+    navigator.clipboard.writeText(randomMap.link).then(() => {
+        showPopup('Random map copied!', false);
+    }).catch(() => {
+        showPopup('Failed to copy random map!', true);
+    });
+    settingsMenu.classList.remove('show');
 });
 
 qualityToggle.addEventListener('click', () => {
@@ -2196,21 +2222,15 @@ document.addEventListener('click', (e) => {
 });
 
 // Set default sort option as active
-document.querySelector('.sort-option[data-mode="difficulty-asc"]').classList.add('active');-min-input');
+const defaultSortOption = document.querySelector('.sort-option[data-mode="difficulty-asc"]');
+if (defaultSortOption) {
+    defaultSortOption.classList.add('active');
+}-min-input');
 const notesMaxInput = document.getElementById('notes-max-input');
 const notesTrack = document.getElementById('notes-track');
 
 // Random Map Button
-randomMapBtn.addEventListener('click', () => {
-    if (maps.length === 0) {
-        showPopup('No maps available!', true);
-        return;
-    }
-    
-    const randomMap = maps[Math.floor(Math.random() * maps.length)];
-    copyLink(randomMap.link, randomMapBtn);
-    showPopup('Random map copied!', false);
-});
+// (Removed - now in menu)
 
 // Favorites Only Filter
 favoritesCheckbox.addEventListener('change', () => {
