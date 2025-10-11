@@ -2226,11 +2226,108 @@ function initSliders() {
     initNotesSlider();
 }
 
+function initDurationSlider() {
+    let isDragging = false;
+    let currentThumb = null;
+    
+    function updateDurationSlider() {
+        const minPercent = (currentDurationRange.min / durationRange.max) * 100;
+        const maxPercent = (currentDurationRange.max / durationRange.max) * 100;
+        
+        durationMinThumb.style.left = minPercent + '%';
+        durationMaxThumb.style.left = maxPercent + '%';
+        durationTrack.style.left = minPercent + '%';
+        durationTrack.style.width = (maxPercent - minPercent) + '%';
+        
+        durationMinInput.value = formatDuration(currentDurationRange.min);
+        durationMaxInput.value = formatDuration(currentDurationRange.max);
+    }
+    
+    function handleDurationMouseDown(e, thumb) {
+        e.preventDefault();
+        e.stopPropagation();
+        isDragging = true;
+        currentThumb = thumb;
+        thumb.classList.add('active');
+        document.addEventListener('mousemove', handleDurationMouseMove);
+        document.addEventListener('mouseup', handleDurationMouseUp);
+    }
+    
+    function handleDurationMouseMove(e) {
+        if (!isDragging || !currentThumb) return;
+        e.preventDefault();
+        
+        const slider = currentThumb.parentElement;
+        const rect = slider.getBoundingClientRect();
+        const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+        const value = (percent / 100) * durationRange.max;
+        
+        if (currentThumb === durationMinThumb) {
+            currentDurationRange.min = Math.max(0, Math.min(value, currentDurationRange.max - 1000));
+        } else {
+            currentDurationRange.max = Math.min(durationRange.max, Math.max(value, currentDurationRange.min + 1000));
+        }
+        
+        updateDurationSlider();
+        debounceFilterUpdate();
+    }
+    
+    function handleDurationMouseUp() {
+        if (isDragging && currentThumb) {
+            currentThumb.classList.remove('active');
+            isDragging = false;
+            currentThumb = null;
+            document.removeEventListener('mousemove', handleDurationMouseMove);
+            document.removeEventListener('mouseup', handleDurationMouseUp);
+        }
+    }
+    
+    durationMinThumb.addEventListener('mousedown', (e) => handleDurationMouseDown(e, durationMinThumb));
+    durationMaxThumb.addEventListener('mousedown', (e) => handleDurationMouseDown(e, durationMaxThumb));
+    
+    durationMinThumb.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleDurationMouseDown(e.touches[0], durationMinThumb);
+    });
+    durationMaxThumb.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleDurationMouseDown(e.touches[0], durationMaxThumb);
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            handleDurationMouseMove(e.touches[0]);
+        }
+    });
+    
+    document.addEventListener('touchend', handleDurationMouseUp);
+    
+    durationMinInput.addEventListener('input', () => {
+        const ms = parseTimeToMilliseconds(durationMinInput.value);
+        if (ms !== null && ms >= 0 && ms <= durationRange.max) {
+            currentDurationRange.min = Math.min(ms, currentDurationRange.max - 1000);
+            updateDurationSlider();
+            debounceFilterUpdate();
+        }
+    });
+    
+    durationMaxInput.addEventListener('input', () => {
+        const ms = parseTimeToMilliseconds(durationMaxInput.value);
+        if (ms !== null && ms >= 0 && ms <= durationRange.max) {
+            currentDurationRange.max = Math.max(ms, currentDurationRange.min + 1000);
+            updateDurationSlider();
+            debounceFilterUpdate();
+        }
+    });
+    
+    updateDurationSlider();
+}
+
 function initNotesSlider() {
     let isDragging = false;
     let currentThumb = null;
 
-    window.updateNotesSlider = function() {
+    window.updateNotesSlider = function() { // <--- Expose globally
         const minPercent = (currentNotesRange.min / notesRange.max) * 100;
         const maxPercent = (currentNotesRange.max / notesRange.max) * 100;
 
@@ -2257,7 +2354,7 @@ function initNotesSlider() {
         if (!isDragging || !currentThumb) return;
         e.preventDefault();
 
-        const slider = document.querySelector('.dual-range-slider');
+        const slider = currentThumb.parentElement;
         const rect = slider.getBoundingClientRect();
         const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
         const value = (percent / 100) * notesRange.max;
@@ -2786,6 +2883,7 @@ function filterAndRenderMaps() {
             return mapNameComparison;
         }
         return a.mapper.localeCompare(b.mapper);
+    });
     });
 
     renderMaps();
