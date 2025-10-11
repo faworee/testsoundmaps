@@ -1016,17 +1016,42 @@ h1 {
 }
 
 .map-artist {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: #ffd700;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     width: 100%;
     position: relative;
-    min-height: 40px;
+    margin-bottom: 5px;
 }
+
+
+.map-artist .favorite-btn {
+    position: static;
+    font-size: 1.5em;
+    margin: 0 0 0 4px;
+    padding: 0;
+    line-height: 1;
+}
+
+.map-artist .star-rating {
+    position: static;
+    margin: 0;
+}
+
+
+.map-artist .artist-name {
+    color: #ffd700;
+    font-size: 0.9em;
+    font-weight: bold;
+    display: -webkit-box;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+}
+
 
 .star-rating {
     position: absolute;
@@ -1559,7 +1584,7 @@ h1 {
 <div class="header-container">
     <div class="header-left">
         <a href="/SoundSpaceCustoms/Info" class="header-button info-button">Info</a>
-        <button class="header-button random-button" id="random-map-btn">Random Map</button>
+        <button class="header-button random-button" id="random-map-btn">Copy Random Map</button>
     </div>
     <div class="header-right">
         <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="header-button discord-button">Submit Map</a>
@@ -2463,21 +2488,34 @@ function toggleFavorite(button, event) {
 async function loadMapDataFromJSON() {
     try {
         loadingSpinner.style.display = 'block';
-        const timestamp = Date.now();
-        const response = await fetch(`Mapdata.json?v=${timestamp}`, {
-            cache: 'no-cache',
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
+        let mapData;
+        const cacheKey = "soundSpaceMapCache";
+        const cacheTimeKey = "soundSpaceMapCacheTime";
+        const cacheDuration = 1000 * 60 * 30; // 30 minutes
+
+        const now = Date.now();
+        const cached = localStorage.getItem(cacheKey);
+        const cachedTime = localStorage.getItem(cacheTimeKey);
+
+        if (cached && cachedTime && now - cachedTime < cacheDuration) {
+            mapData = JSON.parse(cached);
+        } else {
+            const timestamp = Date.now();
+            const response = await fetch(`Mapdata.json?v=${timestamp}`, {
+                cache: 'no-cache',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to load map data: ${response.status} ${response.statusText}`);
             }
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Failed to load map data: ${response.status} ${response.statusText}`);
+            mapData = await response.json();
+            localStorage.setItem(cacheKey, JSON.stringify(mapData));
+            localStorage.setItem(cacheTimeKey, now);
         }
-        
-        const mapData = await response.json();
-        
+
         if (!Array.isArray(mapData)) {
             throw new Error('Invalid JSON format: Expected an array of maps');
         }
@@ -2486,9 +2524,7 @@ async function loadMapDataFromJSON() {
             if (!Array.isArray(mapArray) || mapArray.length < 7) {
                 return null;
             }
-            
             const [link, mapName, artist, mapper, difficulty, patterns, isNew, starRating] = mapArray;
-            
             return {
                 link: link,
                 mapName: mapName,
@@ -2503,19 +2539,19 @@ async function loadMapDataFromJSON() {
                 statsLoaded: false
             };
         }).filter(map => map !== null);
-        
+
         if (maps.length === 0) {
             throw new Error('No valid map data found');
         }
 
         const dataManager = new MapDataManager();
         await dataManager.loadAllMapData(maps);
-        
+
         initSliders();
         filterAndRenderMaps();
-        
+
         window.mapDataManager = dataManager;
-        
+
     } catch (error) {
         loadingSpinner.style.display = 'none';
         mapList.innerHTML = `
@@ -2534,7 +2570,6 @@ async function loadMapDataFromJSON() {
         `;
     }
 }
-
 function parseMapData(rawData) {
     if (!rawData || typeof rawData !== 'string') {
         return { duration: 0, noteCount: 0 };
@@ -3006,34 +3041,34 @@ function createMapCard(m) {
     const formattedArtistName = formatArtistName(m.artist);
     const mapDataForCopy = encodeURIComponent(JSON.stringify(m));
     
-    card.innerHTML = `
-        ${newTagHtml}
-        ${favoriteHtml}
-        <div class="map-content">
-            <div class="map-artist">
-                ${starRatingHtml}
-                <span class="artist-name">${formattedArtistName}</span>
-            </div>
-            <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
-            <div class="map-mapper">Mapped by: ${m.mapper}</div>
-            <div class="map-difficulty">Difficulty: ${m.difficulty}</div>
-            ${mapStatsHtml}
+card.innerHTML = `
+    ${newTagHtml}
+    <div class="map-content">
+        <div class="map-artist">
+            ${starRatingHtml}
+            ${favoriteHtml}
+            <span class="artist-name">${formattedArtistName}</span>
         </div>
-        <div class="map-footer">
-            ${patternsHtml}
-            <div class="action-buttons">
-                <button class="copy-btn" onclick="copyLinkFromCard('${escapedLink}', this, '${mapDataForCopy}')">
-                    Copy Link
-                </button>
-                <div class="action-dropdown">
-                    <button class="action-dropdown-toggle" onclick="toggleActionDropdown(this)">&#x22EE;</button>
-                    <div class="action-dropdown-menu">
-                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); copyRawFromCard('${escapedLink}', '${mapDataForCopy}')">Copy Raw</a>
-                    </div>
+        <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
+        <div class="map-mapper">Mapped by: ${m.mapper}</div>
+        <div class="map-difficulty">Difficulty: ${m.difficulty}</div>
+        ${mapStatsHtml}
+    </div>
+    <div class="map-footer">
+        ${patternsHtml}
+        <div class="action-buttons">
+            <button class="copy-btn" onclick="copyLinkFromCard('${escapedLink}', this, '${mapDataForCopy}')">
+                Copy Link
+            </button>
+            <div class="action-dropdown">
+                <button class="action-dropdown-toggle" onclick="toggleActionDropdown(this)">&#x22EE;</button>
+                <div class="action-dropdown-menu">
+                    <a href="#" class="dropdown-item" onclick="event.preventDefault(); copyRawFromCard('${escapedLink}', '${mapDataForCopy}')">Copy Raw</a>
                 </div>
             </div>
         </div>
-    `;
+    </div>
+`;
     return card;
 }
 
@@ -3056,13 +3091,16 @@ async function copyLink(link, button, mapData) {
         showPopup("Link copied!", false);
         setTimeout(() => {
             button.classList.remove("copied");
-            button.innerHTML = `Copy Link`;
+            if (button.id === "random-map-btn") {
+                button.innerHTML = "Copy Random Map";
+            } else {
+                button.innerHTML = "Copy Link";
+            }
         }, 1000);
     } catch (err) {
         showPopup("Failed to copy link.", true);
     }
 }
-
 async function copyRawData(link, mapData) {
     try {
         const rawLink = getRawUrl(link);
