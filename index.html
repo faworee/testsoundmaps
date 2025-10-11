@@ -1,7 +1,4 @@
-
-</script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -220,6 +217,7 @@ h1 {
     font-size: 3em;
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 30px;
 }
@@ -787,6 +785,7 @@ h1 {
 
 .slider-input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 @media (max-width: 768px) {
@@ -1055,13 +1054,14 @@ h1 {
     text-align: center;
     margin: 0 auto;
     padding: 0 60px;
-    line-height: 1.2;
-    display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
     hyphens: auto;
+    flex-grow: 1;
+    width: 100%;
     flex-grow: 1;
     width: 100%;
 }
@@ -2226,120 +2226,23 @@ function initSliders() {
     initNotesSlider();
 }
 
-function initDurationSlider() {
-    let isDragging = false;
-    let currentThumb = null;
-    
-    function updateDurationSlider() {
-        const minPercent = (currentDurationRange.min / durationRange.max) * 100;
-        const maxPercent = (currentDurationRange.max / durationRange.max) * 100;
-        
-        durationMinThumb.style.left = minPercent + '%';
-        durationMaxThumb.style.left = maxPercent + '%';
-        durationTrack.style.left = minPercent + '%';
-        durationTrack.style.width = (maxPercent - minPercent) + '%';
-        
-        durationMinInput.value = formatDuration(currentDurationRange.min);
-        durationMaxInput.value = formatDuration(currentDurationRange.max);
-    }
-    
-    function handleDurationMouseDown(e, thumb) {
-        e.preventDefault();
-        e.stopPropagation();
-        isDragging = true;
-        currentThumb = thumb;
-        thumb.classList.add('active');
-        document.addEventListener('mousemove', handleDurationMouseMove);
-        document.addEventListener('mouseup', handleDurationMouseUp);
-    }
-    
-    function handleDurationMouseMove(e) {
-        if (!isDragging || !currentThumb) return;
-        e.preventDefault();
-        
-        const slider = currentThumb.parentElement;
-        const rect = slider.getBoundingClientRect();
-        const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-        const value = (percent / 100) * durationRange.max;
-        
-        if (currentThumb === durationMinThumb) {
-            currentDurationRange.min = Math.max(0, Math.min(value, currentDurationRange.max - 1000));
-        } else {
-            currentDurationRange.max = Math.min(durationRange.max, Math.max(value, currentDurationRange.min + 1000));
-        }
-        
-        updateDurationSlider();
-        debounceFilterUpdate();
-    }
-    
-    function handleDurationMouseUp() {
-        if (isDragging && currentThumb) {
-            currentThumb.classList.remove('active');
-            isDragging = false;
-            currentThumb = null;
-            document.removeEventListener('mousemove', handleDurationMouseMove);
-            document.removeEventListener('mouseup', handleDurationMouseUp);
-        }
-    }
-    
-    durationMinThumb.addEventListener('mousedown', (e) => handleDurationMouseDown(e, durationMinThumb));
-    durationMaxThumb.addEventListener('mousedown', (e) => handleDurationMouseDown(e, durationMaxThumb));
-    
-    durationMinThumb.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleDurationMouseDown(e.touches[0], durationMinThumb);
-    });
-    durationMaxThumb.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleDurationMouseDown(e.touches[0], durationMaxThumb);
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-        if (isDragging) {
-            handleDurationMouseMove(e.touches[0]);
-        }
-    });
-    
-    document.addEventListener('touchend', handleDurationMouseUp);
-    
-    durationMinInput.addEventListener('input', () => {
-        const ms = parseTimeToMilliseconds(durationMinInput.value);
-        if (ms !== null && ms >= 0 && ms <= durationRange.max) {
-            currentDurationRange.min = Math.min(ms, currentDurationRange.max - 1000);
-            updateDurationSlider();
-            debounceFilterUpdate();
-        }
-    });
-    
-    durationMaxInput.addEventListener('input', () => {
-        const ms = parseTimeToMilliseconds(durationMaxInput.value);
-        if (ms !== null && ms >= 0 && ms <= durationRange.max) {
-            currentDurationRange.max = Math.max(ms, currentDurationRange.min + 1000);
-            updateDurationSlider();
-            debounceFilterUpdate();
-        }
-    });
-    
-    updateDurationSlider();
-}
-
 function initNotesSlider() {
     let isDragging = false;
     let currentThumb = null;
-    
-    function updateNotesSlider() {
+
+    window.updateNotesSlider = function() {
         const minPercent = (currentNotesRange.min / notesRange.max) * 100;
         const maxPercent = (currentNotesRange.max / notesRange.max) * 100;
-        
+
         notesMinThumb.style.left = minPercent + '%';
         notesMaxThumb.style.left = maxPercent + '%';
         notesTrack.style.left = minPercent + '%';
         notesTrack.style.width = (maxPercent - minPercent) + '%';
-        
+
         notesMinInput.value = Math.round(currentNotesRange.min);
         notesMaxInput.value = Math.round(currentNotesRange.max);
-    }
-    
+    };
+
     function handleNotesMouseDown(e, thumb) {
         e.preventDefault();
         e.stopPropagation();
@@ -2349,26 +2252,26 @@ function initNotesSlider() {
         document.addEventListener('mousemove', handleNotesMouseMove);
         document.addEventListener('mouseup', handleNotesMouseUp);
     }
-    
+
     function handleNotesMouseMove(e) {
         if (!isDragging || !currentThumb) return;
         e.preventDefault();
-        
-        const slider = currentThumb.parentElement;
+
+        const slider = document.querySelector('.dual-range-slider');
         const rect = slider.getBoundingClientRect();
         const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
         const value = (percent / 100) * notesRange.max;
-        
+
         if (currentThumb === notesMinThumb) {
             currentNotesRange.min = Math.max(0, Math.min(value, currentNotesRange.max - 10));
         } else {
             currentNotesRange.max = Math.min(notesRange.max, Math.max(value, currentNotesRange.min + 10));
         }
-        
-        updateNotesSlider();
+
+        window.updateNotesSlider();
         debounceFilterUpdate();
     }
-    
+
     function handleNotesMouseUp() {
         if (isDragging && currentThumb) {
             currentThumb.classList.remove('active');
@@ -2378,10 +2281,10 @@ function initNotesSlider() {
             document.removeEventListener('mouseup', handleNotesMouseUp);
         }
     }
-    
+
     notesMinThumb.addEventListener('mousedown', (e) => handleNotesMouseDown(e, notesMinThumb));
     notesMaxThumb.addEventListener('mousedown', (e) => handleNotesMouseDown(e, notesMaxThumb));
-    
+
     notesMinThumb.addEventListener('touchstart', (e) => {
         e.preventDefault();
         handleNotesMouseDown(e.touches[0], notesMinThumb);
@@ -2390,34 +2293,34 @@ function initNotesSlider() {
         e.preventDefault();
         handleNotesMouseDown(e.touches[0], notesMaxThumb);
     });
-    
+
     document.addEventListener('touchmove', (e) => {
         if (isDragging) {
             handleNotesMouseMove(e.touches[0]);
         }
     });
-    
+
     document.addEventListener('touchend', handleNotesMouseUp);
-    
+
     notesMinInput.addEventListener('input', () => {
         const value = parseInt(notesMinInput.value) || 0;
         if (value >= 0 && value <= notesRange.max) {
             currentNotesRange.min = Math.min(value, currentNotesRange.max - 10);
-            updateNotesSlider();
+            window.updateNotesSlider();
             debounceFilterUpdate();
         }
     });
-    
+
     notesMaxInput.addEventListener('input', () => {
         const value = parseInt(notesMaxInput.value) || notesRange.max;
         if (value >= 0 && value <= notesRange.max) {
             currentNotesRange.max = Math.max(value, currentNotesRange.min + 10);
-            updateNotesSlider();
+            window.updateNotesSlider();
             debounceFilterUpdate();
         }
     });
-    
-    updateNotesSlider();
+
+    window.updateNotesSlider();
 }
 
 let filterUpdateTimeout;
@@ -2444,9 +2347,7 @@ function createStarRating(starRating) {
         return '<span class="star-rating">★ 0.00</span>';
     }
     
-return `<span class="star-rating">★ ${numRating.toFixed(2)}</span>`;
-
-return `<span class="star-rating">★ ${numRating.toFixed(2)}</span>`;
+    return `<span class="star-rating">★ ${numRating.toFixed(2)}</span>`;
 }
 
 async function loadMapDataFromJSON() {
@@ -2515,7 +2416,9 @@ async function loadMapDataFromJSON() {
                 <ul style="text-align: left; display: inline-block;">
                     <li>The file "Mapdata.json" exists in the same directory</li>
                     <li>The JSON file contains valid map data in the correct format</li>
+                    <li>Your web server allows loading local JSON files</li>
                 </ul>
+                <p>If running locally, you may need to serve this through a web server rather than opening the HTML file directly.</p>
                 <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; background: #4facfe; color: white; border: none; border-radius: 5px; cursor: pointer;">Retry</button>
             </div>
         `;
@@ -3148,3 +3051,4 @@ setInterval(() => {
 document.addEventListener("DOMContentLoaded", () => {
     loadMapDataFromJSON();
 });
+</script>
