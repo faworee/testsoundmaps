@@ -3,13 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta property="og:title" content="Sound Space Custom Maps">
-<meta property="og:description" content="Browse custom maps for Sound Space. Features maps from various artists and mappers with different difficulty levels.">
-<meta property="og:image" content="">
-<meta property="og:url" content="https://faworee.github.io/SoundSpaceCustoms/">
-<meta property="og:type" content="website">
-
 <title>Sound Space Custom Maps</title>
 <style>
 body {
@@ -123,17 +116,6 @@ body {
     box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
 }
 
-.performance-toggle {
-    background: rgba(79, 172, 254, 0.2);
-    border: 1px solid rgba(79, 172, 254, 0.4);
-    color: #4facfe;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.85em;
-    transition: all 0.3s ease;
-}
-
 .settings-dropdown {
     position: relative;
     display: inline-block;
@@ -196,26 +178,9 @@ body {
     color: white;
 }
 
-@media (max-width: 768px) {
-    .performance-toggle {
-        padding: 6px 12px;
-        font-size: 0.8em;
-    }
-}
-
-.performance-toggle:hover {
-    background: rgba(79, 172, 254, 0.3);
-    transform: scale(1.05);
-}
-
-.performance-toggle.active {
-    background:     linear-gradient(90deg, #4facfe, #f093fb);
-    color: white;
-}
-
 h1 {
     font-size: 3em;
-    background:  linear-gradient(90deg, #4facfe, #f093fb);
+    background: linear-gradient(90deg, #4facfe, #f093fb);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -306,7 +271,7 @@ h1 {
     display: inline-block;
 }
 
-#filter-toggle, #sort-toggle {
+#filter-toggle {
     padding: 12px 20px;
     border-radius: 30px;
     border: none;
@@ -315,26 +280,20 @@ h1 {
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.3s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(90deg, #17a2b8, #138496);
 }
 
 @media (max-width: 768px) {
-    #filter-toggle, #sort-toggle {
+    #filter-toggle {
         padding: 10px 16px;
         font-size: 0.9em;
     }
 }
 
-.low-quality #filter-toggle, .low-quality #sort-toggle {
+.low-quality #filter-toggle {
     transition: none;
     box-shadow: none;
     border: 1px solid #444;
-}
-
-#filter-toggle {
-    background: linear-gradient(90deg, #17a2b8, #138496);
-}
-
-.low-quality #filter-toggle {
     background: #17a2b8;
 }
 
@@ -347,13 +306,6 @@ h1 {
     transform: none;
     box-shadow: none;
     background: #138496;
-}
-
-.sort-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
 .sort-dropdown {
@@ -434,63 +386,6 @@ h1 {
     background: #007bff;
 }
 
-@media (max-width: 768px) {
-    .sort-container {
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .sort-dropdown-toggle {
-        padding: 10px 16px;
-        font-size: 0.9em;
-    }
-}
-
-#sort-toggle, #star-sort-toggle {
-    background: linear-gradient(90deg, #28a745, #218838);
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 768px) {
-    #sort-toggle, #star-sort-toggle {
-        padding: 10px 16px;
-        font-size: 0.9em;
-    }
-}
-
-.low-quality #sort-toggle, .low-quality #star-sort-toggle {
-    background: #28a745;
-    transition: none;
-    box-shadow: none;
-    border: 1px solid #444;
-}
-
-#sort-toggle:hover, #star-sort-toggle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 12px #218838;
-}
-
-.low-quality #sort-toggle:hover, .low-quality #star-sort-toggle:hover {
-    transform: none;
-    box-shadow: none;
-    background: #218838;
-}
-
-#sort-toggle.active, #star-sort-toggle.active {
-    background: linear-gradient(90deg, #007bff, #0056b3);
-}
-
-.low-quality #sort-toggle.active, .low-quality #star-sort-toggle.active {
-    background: #007bff;
-}
-
 #filter-menu {
     display: none;
     position: absolute;
@@ -524,13 +419,6 @@ h1 {
     background: linear-gradient(90deg, #4facfe, #f093fb);
     font-size: 1.1em;
     margin-bottom: 10px;
-}
-
-@media (max-width: 768px) {
-    .filter-section h3 {
-        font-size: 1em;
-        margin-bottom: 8px;
-    }
 }
 
 .filter-buttons {
@@ -614,8 +502,7 @@ h1 {
     position: absolute;
     width: 20px;
     height: 20px;
-    background:   linear-gradient(90deg, #4facfe, #f093fb);
-
+    background: linear-gradient(90deg, #4facfe, #f093fb);
     border: 2px solid white;
     border-radius: 50%;
     cursor: pointer;
@@ -679,13 +566,6 @@ h1 {
     font-size: 0.85em;
     transition: all 0.2s;
     flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-    .filter-button {
-        padding: 5px 10px;
-        font-size: 0.8em;
-    }
 }
 
 .low-quality .filter-button {
@@ -753,12 +633,6 @@ h1 {
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
-    .apm-option label, .filter-option label {
-        font-size: 0.8em;
-    }
-}
-
 .filter-actions {
     display: flex;
     justify-content: space-between;
@@ -787,13 +661,6 @@ h1 {
 .slider-input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
-}
-
-@media (max-width: 768px) {
-    .clear-filters, .apply-filters {
-        padding: 10px 16px;
-        font-size: 0.8em;
-    }
 }
 
 .low-quality .clear-filters, .low-quality .apply-filters {
@@ -925,9 +792,6 @@ h1 {
 }
 
 .favorite-btn {
-    position: absolute;
-    top: 25px;
-    right: 25px; 
     background: none;
     border: none;
     cursor: pointer;
@@ -936,9 +800,9 @@ h1 {
     transition: transform 0.2s;
     padding: 5px;
     line-height: 1;
-    color: #ff3b3b; /* Red color */
+    color: #ff3b3b;
+    position: static;
 }
-
 
 .favorite-btn:hover {
     transform: scale(1.2);
@@ -1015,51 +879,15 @@ h1 {
     text-align: center;
     gap: 8px;
 }
-.map-artist {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-height: 40px;
-    margin-bottom: 5px;
-    gap: 10px;
-}
-.artist-side {
-    display: flex;
-    align-items: center;
-}
-.artist-left, .artist-right {
-    flex: 0 0 40px;
-    justify-content: center;
-}
-.artist-center {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-}
-
-
 
 .map-artist {
     display: flex;
-    flex-direction: column; 
-    
+    flex-direction: column;
     align-items: center;
-    
     justify-content: center;
-    
     width: 100%;
-    min-height: 60px; 
     margin-bottom: 5px;
-    
-    gap: 5px; 
-}
-
-.artist-left .star-rating,
-.artist-right .favorite-btn {
-    margin: 0 auto;
+    gap: 8px;
 }
 
 .star-rating {
@@ -1080,18 +908,17 @@ h1 {
 
 .artist-name {
     text-align: center;
-    margin: 0 auto;
-    padding: 0 60px;
+    margin: 0;
+    padding: 0;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
     hyphens: auto;
-    flex-grow: 1;
     width: 100%;
-    flex-grow: 1;
-    width: 100%;
+    color: #ffd700;
+    font-weight: 500;
 }
 
 .low-quality .star-rating {
@@ -1499,8 +1326,7 @@ h1 {
 }
 
 .load-more-btn {
-    background:    linear-gradient(90deg, #4facfe, #f093fb);
-
+    background: linear-gradient(90deg, #4facfe, #f093fb);
     color: white;
     border: none;
     border-radius: 25px;
@@ -2354,7 +2180,7 @@ function initNotesSlider() {
     let isDragging = false;
     let currentThumb = null;
 
-    window.updateNotesSlider = function() { // <--- Expose globally
+    window.updateNotesSlider = function() {
         const minPercent = (currentNotesRange.min / notesRange.max) * 100;
         const maxPercent = (currentNotesRange.max / notesRange.max) * 100;
 
@@ -2490,7 +2316,7 @@ async function loadMapDataFromJSON() {
         let mapData;
         const cacheKey = "soundSpaceMapCache";
         const cacheTimeKey = "soundSpaceMapCacheTime";
-        const cacheDuration = 1000 * 60 * 30; // 30 minutes
+        const cacheDuration = 1000 * 60 * 30;
 
         const now = Date.now();
         const cached = localStorage.getItem(cacheKey);
@@ -2569,6 +2395,7 @@ async function loadMapDataFromJSON() {
         `;
     }
 }
+
 function parseMapData(rawData) {
     if (!rawData || typeof rawData !== 'string') {
         return { duration: 0, noteCount: 0 };
@@ -3040,13 +2867,15 @@ function createMapCard(m) {
     const formattedArtistName = formatArtistName(m.artist);
     const mapDataForCopy = encodeURIComponent(JSON.stringify(m));
     
-card.innerHTML = `
+    card.innerHTML = `
     ${newTagHtml}
     <div class="map-content">
         <div class="map-artist">
-            <div class="artist-side artist-left">${starRatingHtml}</div>
-            <div class="artist-side artist-center"><span class="artist-name">${formattedArtistName}</span></div>
-            <div class="artist-side artist-right">${favoriteHtml}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px;">
+                <div style="flex: 0 0 auto;">${starRatingHtml}</div>
+                <div style="flex: 0 0 auto;">${favoriteHtml}</div>
+            </div>
+            <span class="artist-name">${formattedArtistName}</span>
         </div>
         <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
         <div class="map-mapper">Mapped by: ${m.mapper}</div>
@@ -3100,6 +2929,7 @@ async function copyLink(link, button, mapData) {
         showPopup("Failed to copy link.", true);
     }
 }
+
 async function copyRawData(link, mapData) {
     try {
         const rawLink = getRawUrl(link);
@@ -3172,3 +3002,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loadMapDataFromJSON();
 });
 </script>
+</body>
+</html>
