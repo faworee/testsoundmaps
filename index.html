@@ -937,10 +937,7 @@ h1 {
     line-height: 1;
     color: #ff3b3b; /* Red color */
 }
-.favorite-btn .heart-outline,
-.favorite-btn .heart-filled {
-    color: #ff3b3b;
-}
+
 
 .favorite-btn:hover {
     transform: scale(1.2);
@@ -950,10 +947,15 @@ h1 {
 .favorite-btn .heart-filled {
     color: #ff3b3b;
 }
+.favorite-btn .heart-outline {
+    display: inline;
+}
+.favorite-btn .heart-filled {
+    display: none;
+}
 .favorite-btn.favorited .heart-outline {
     display: none;
 }
-
 .favorite-btn.favorited .heart-filled {
     display: inline;
 }
@@ -2990,7 +2992,6 @@ function createMapCard(m) {
     const escapedLink = m.link.replace(/'/g, "\\'");
     const starRatingHtml = createStarRating(m.starRating);
     const formattedArtistName = formatArtistName(m.artist);
-    const copyCount = copyCounterManager.getCopyCount(m);
     const mapDataForCopy = encodeURIComponent(JSON.stringify(m));
     
     card.innerHTML = `
@@ -3011,7 +3012,6 @@ function createMapCard(m) {
             <div class="action-buttons">
                 <button class="copy-btn" onclick="copyLinkFromCard('${escapedLink}', this, '${mapDataForCopy}')">
                     Copy Link
-                    ${copyCount > 0 ? '<div class="copy-count">' + copyCount + ' copies</div>' : ''}
                 </button>
                 <div class="action-dropdown">
                     <button class="action-dropdown-toggle" onclick="toggleActionDropdown(this)">&#x22EE;</button>
@@ -3035,38 +3035,16 @@ function copyRawFromCard(link, encodedMapData) {
     copyRawData(link, mapData);
 }
 
-function toggleFavorite(button, event) {
-    event.stopPropagation();
-    const mapData = JSON.parse(button.getAttribute('data-map'));
-    const isFavorited = favoritesManager.toggleFavorite(mapData);
-    
-    button.classList.toggle('favorited', isFavorited);
-    const tooltip = button.querySelector('.favorite-tooltip');
-    tooltip.textContent = isFavorited ? 'Favorited!' : 'Favorite?';
-    
-    showPopup(isFavorited ? 'Added to favorites!' : 'Removed from favorites!', false);
-    
-    if (showFavoritesOnly && !isFavorited) {
-        const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
-        currentDisplayCount = batchSize;
-        filterAndRenderMaps();
-    }
-}
-
 async function copyLink(link, button, mapData) {
     try {
         await navigator.clipboard.writeText(link);
         button.classList.add("copied");
         const originalText = button.innerHTML;
-        
-        const newCount = await copyCounterManager.incrementCopyCount(mapData);
-        
         button.innerHTML = "Copied!";
         showPopup("Link copied!", false);
-        
         setTimeout(() => {
             button.classList.remove("copied");
-            button.innerHTML = `Copy Link${newCount > 0 ? `<div class="copy-count">${newCount} copies</div>` : ''}`;
+            button.innerHTML = `Copy Link`;
         }, 1000);
     } catch (err) {
         showPopup("Failed to copy link.", true);
@@ -3092,13 +3070,11 @@ async function copyRawData(link, mapData) {
         
         if (rawContent) {
             await navigator.clipboard.writeText(rawContent);
-            const newCount = await copyCounterManager.incrementCopyCount(mapData);
             showPopup("Raw data copied!", false);
         } else {
             showPopup("Failed to fetch raw data.", true);
         }
     } catch (error) {
-        console.error("Error copying raw data:", error);
         showPopup("Failed to copy raw data.", true);
     }
 }
