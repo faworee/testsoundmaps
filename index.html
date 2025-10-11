@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta property="og:title" content="Sound Space Custom Maps">
 <meta property="og:description" content="Browse custom maps for Sound Space. Features maps from various artists and mappers with different difficulty levels.">
 <meta property="og:image" content="">
 <meta property="og:url" content="https://faworee.github.io/SoundSpaceCustoms/">
 <meta property="og:type" content="website">
-
 <title>Sound Space Custom Maps</title>
 <style>
 body {
@@ -123,17 +121,6 @@ body {
     box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
 }
 
-.performance-toggle {
-    background: rgba(79, 172, 254, 0.2);
-    border: 1px solid rgba(79, 172, 254, 0.4);
-    color: #4facfe;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.85em;
-    transition: all 0.3s ease;
-}
-
 .settings-dropdown {
     position: relative;
     display: inline-block;
@@ -162,7 +149,7 @@ body {
     top: 100%;
     right: 0;
     background-color: #222;
-    min-width: 220px;
+    min-width: 200px;
     box-shadow: 0px 8px 20px rgba(0,0,0,0.4);
     z-index: 1000;
     border-radius: 15px;
@@ -185,8 +172,6 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    text-decoration: none;
-    color: white;
 }
 
 .settings-option:hover {
@@ -198,40 +183,18 @@ body {
     color: white;
 }
 
-.settings-divider {
-    height: 1px;
-    background: #444;
-    margin: 10px 0;
-}
-
-@media (max-width: 768px) {
-    .performance-toggle {
-        padding: 6px 12px;
-        font-size: 0.8em;
-    }
-}
-
-.performance-toggle:hover {
-    background: rgba(79, 172, 254, 0.3);
-    transform: scale(1.05);
-}
-
-.performance-toggle.active {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-    color: white;
-}
-
 h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 0;
+    margin-bottom: 30px;
 }
 
 @media (max-width: 768px) {
     h1 {
-        font-size: 1.8em;
+        font-size: 2em;
+        margin-bottom: 20px;
     }
 }
 
@@ -312,7 +275,7 @@ h1 {
     display: inline-block;
 }
 
-#filter-toggle, #sort-toggle {
+#filter-toggle {
     padding: 12px 20px;
     border-radius: 30px;
     border: none;
@@ -321,26 +284,20 @@ h1 {
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.3s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(90deg, #17a2b8, #138496);
 }
 
 @media (max-width: 768px) {
-    #filter-toggle, #sort-toggle {
+    #filter-toggle {
         padding: 10px 16px;
         font-size: 0.9em;
     }
 }
 
-.low-quality #filter-toggle, .low-quality #sort-toggle {
+.low-quality #filter-toggle {
     transition: none;
     box-shadow: none;
     border: 1px solid #444;
-}
-
-#filter-toggle {
-    background: linear-gradient(90deg, #17a2b8, #138496);
-}
-
-.low-quality #filter-toggle {
     background: #17a2b8;
 }
 
@@ -403,7 +360,7 @@ h1 {
     left: 50%;
     transform: translateX(-50%);
     background-color: #222;
-    min-width: 200px;
+    min-width: 250px;
     box-shadow: 0px 8px 20px rgba(0,0,0,0.4);
     z-index: 1000;
     border-radius: 15px;
@@ -414,6 +371,24 @@ h1 {
 
 .sort-dropdown-menu.show {
     display: block;
+}
+
+.sort-section {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.sort-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.sort-section h4 {
+    color: #4facfe;
+    font-size: 0.9em;
+    margin: 5px 0 10px 0;
+    text-align: center;
 }
 
 .sort-option {
@@ -450,51 +425,6 @@ h1 {
         padding: 10px 16px;
         font-size: 0.9em;
     }
-}
-
-#sort-toggle, #star-sort-toggle {
-    background: linear-gradient(90deg, #28a745, #218838);
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 768px) {
-    #sort-toggle, #star-sort-toggle {
-        padding: 10px 16px;
-        font-size: 0.9em;
-    }
-}
-
-.low-quality #sort-toggle, .low-quality #star-sort-toggle {
-    background: #28a745;
-    transition: none;
-    box-shadow: none;
-    border: 1px solid #444;
-}
-
-#sort-toggle:hover, #star-sort-toggle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 12px #218838;
-}
-
-.low-quality #sort-toggle:hover, .low-quality #star-sort-toggle:hover {
-    transform: none;
-    box-shadow: none;
-    background: #218838;
-}
-
-#sort-toggle.active, #star-sort-toggle.active {
-    background: linear-gradient(90deg, #007bff, #0056b3);
-}
-
-.low-quality #sort-toggle.active, .low-quality #star-sort-toggle.active {
-    background: #007bff;
 }
 
 #filter-menu {
@@ -1555,28 +1485,25 @@ h1 {
 </head>
 
 <body>
-<h1>Sound Space Custom Maps</h1>
-
-<div class="header-container" style="margin-top: 20px; justify-content: center;">
-    <div class="settings-dropdown">
-        <button class="settings-toggle" id="settings-toggle">☰ Menu</button>
-        <div class="settings-menu" id="settings-menu">
-            <a href="/SoundSpaceCustoms/Info" class="settings-option">
-                <span>ℹ️ Info</span>
-            </a>
-            <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="settings-option">
-                <span>📤 Submit Map</span>
-            </a>
-            <div class="settings-option" id="random-map-option">
-                <span>🎲 Random Map</span>
-            </div>
-            <div class="settings-divider"></div>
-            <div class="settings-option" id="quality-toggle">
-                <span>🎨 Low Quality Mode</span>
+<div class="header-container">
+    <div class="header-left">
+        <a href="/SoundSpaceCustoms/Info" class="header-button info-button">Info</a>
+        <button class="header-button random-button" id="random-map-btn">Random Map</button>
+    </div>
+    <div class="header-right">
+        <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="header-button discord-button">Submit Map</a>
+        <div class="settings-dropdown">
+            <button class="settings-toggle" id="settings-toggle">⚙ Settings</button>
+            <div class="settings-menu" id="settings-menu">
+                <div class="settings-option" id="quality-toggle">
+                    <span>🎨 Low Quality Mode</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<h1>Sound Space Custom Maps</h1>
 
 <div id="search-container">
     <input type="text" id="search-bar" placeholder="Search maps, artists, mappers or GitHub links...">
@@ -1693,10 +1620,27 @@ h1 {
         <div class="sort-dropdown">
             <button class="sort-dropdown-toggle" id="sort-dropdown-toggle">Sort Options</button>
             <div class="sort-dropdown-menu" id="sort-dropdown-menu">
-                <div class="sort-option" id="sort-easy-hard" data-mode="difficulty-asc">Easy → Hard</div>
-                <div class="sort-option" id="sort-hard-easy" data-mode="difficulty-desc">Hard → Easy</div>
-                <div class="sort-option" id="sort-star-high" data-mode="star-desc">★ High → Low</div>
-                <div class="sort-option" id="sort-star-low" data-mode="star-asc">★ Low → High</div>
+                <div class="sort-section">
+                    <h4>Difficulty Sort</h4>
+                    <div class="sort-option" data-primary="difficulty-asc">Easy → Hard</div>
+                    <div class="sort-option" data-primary="difficulty-desc">Hard → Easy</div>
+                </div>
+                <div class="sort-section">
+                    <h4>Star Rating Sort</h4>
+                    <div class="sort-option" data-primary="star-desc">★ High → Low</div>
+                    <div class="sort-option" data-primary="star-asc">★ Low → High</div>
+                </div>
+                <div class="sort-section">
+                    <h4>Combined Sort</h4>
+                    <div class="sort-option" data-primary="difficulty-asc" data-secondary="star-desc">Easy → Hard, then ★ High → Low</div>
+                    <div class="sort-option" data-primary="difficulty-asc" data-secondary="star-asc">Easy → Hard, then ★ Low → High</div>
+                    <div class="sort-option" data-primary="difficulty-desc" data-secondary="star-desc">Hard → Easy, then ★ High → Low</div>
+                    <div class="sort-option" data-primary="difficulty-desc" data-secondary="star-asc">Hard → Easy, then ★ Low → High</div>
+                    <div class="sort-option" data-primary="star-desc" data-secondary="difficulty-asc">★ High → Low, then Easy → Hard</div>
+                    <div class="sort-option" data-primary="star-desc" data-secondary="difficulty-desc">★ High → Low, then Hard → Easy</div>
+                    <div class="sort-option" data-primary="star-asc" data-secondary="difficulty-asc">★ Low → High, then Easy → Hard</div>
+                    <div class="sort-option" data-primary="star-asc" data-secondary="difficulty-desc">★ Low → High, then Hard → Easy</div>
+                </div>
             </div>
         </div>
     </div>
@@ -2099,7 +2043,8 @@ class MapDataManager {
 
 let isLowQualityMode = false;
 const difficultyOrder = ["Easy", "Medium", "Hard", "Logic", "Brrrr", "Tasukete"];
-let currentSortMode = 'difficulty-asc'; 
+let currentSortPrimary = 'difficulty-asc';
+let currentSortSecondary = null;
 let maps = [];
 let filteredMaps = [];
 let selectedDifficulties = [];
@@ -2127,6 +2072,7 @@ const loadMoreContainer = document.getElementById('load-more-container');
 const scrollIndicator = document.getElementById('scroll-indicator');
 const newMapsCheckbox = document.getElementById('new-maps-only');
 const favoritesCheckbox = document.getElementById('favorites-only');
+const randomMapBtn = document.getElementById('random-map-btn');
 const durationMinThumb = document.getElementById('duration-min-thumb');
 const durationMaxThumb = document.getElementById('duration-max-thumb');
 const durationMinInput = document.getElementById('duration-min-input');
@@ -2134,32 +2080,18 @@ const durationMaxInput = document.getElementById('duration-max-input');
 const durationTrack = document.getElementById('duration-track');
 const notesMinThumb = document.getElementById('notes-min-thumb');
 const notesMaxThumb = document.getElementById('notes-max-thumb');
+const notesMinInput = document.getElementById('notes-min-input');
+const notesMaxInput = document.getElementById('notes-max-input');
+const notesTrack = document.getElementById('notes-track');
 
-// Settings Dropdown (Menu)
+// Settings Dropdown
 const settingsToggle = document.getElementById('settings-toggle');
 const settingsMenu = document.getElementById('settings-menu');
 const qualityToggle = document.getElementById('quality-toggle');
-const randomMapOption = document.getElementById('random-map-option');
 
 settingsToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     settingsMenu.classList.toggle('show');
-});
-
-// Random Map from Menu
-randomMapOption.addEventListener('click', () => {
-    if (maps.length === 0) {
-        showPopup('No maps available!', true);
-        return;
-    }
-    
-    const randomMap = maps[Math.floor(Math.random() * maps.length)];
-    navigator.clipboard.writeText(randomMap.link).then(() => {
-        showPopup('Random map copied!', false);
-    }).catch(() => {
-        showPopup('Failed to copy random map!', true);
-    });
-    settingsMenu.classList.remove('show');
 });
 
 qualityToggle.addEventListener('click', () => {
@@ -2187,7 +2119,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Sort Dropdown
+// Sort Dropdown with Multi-Criteria Support
 const sortDropdownToggle = document.getElementById('sort-dropdown-toggle');
 const sortDropdownMenu = document.getElementById('sort-dropdown-menu');
 const sortOptions = document.querySelectorAll('.sort-option');
@@ -2202,7 +2134,8 @@ sortOptions.forEach(option => {
         sortOptions.forEach(opt => opt.classList.remove('active'));
         option.classList.add('active');
         
-        currentSortMode = option.dataset.mode;
+        currentSortPrimary = option.dataset.primary;
+        currentSortSecondary = option.dataset.secondary || null;
         
         const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
         currentDisplayCount = batchSize;
@@ -2219,14 +2152,19 @@ document.addEventListener('click', (e) => {
 });
 
 // Set default sort option as active
-const defaultSortOption = document.querySelector('.sort-option[data-mode="difficulty-asc"]');
-if (defaultSortOption) {
-    defaultSortOption.classList.add('active');
-}
-const notesMinInput = document.getElementById('notes-min-input');
+document.querySelector('.sort-option[data-primary="difficulty-asc"]').classList.add('active');
 
 // Random Map Button
-// (Removed - now in menu)
+randomMapBtn.addEventListener('click', () => {
+    if (maps.length === 0) {
+        showPopup('No maps available!', true);
+        return;
+    }
+    
+    const randomMap = maps[Math.floor(Math.random() * maps.length)];
+    copyLink(randomMap.link, randomMapBtn);
+    showPopup('Random map copied!', false);
+});
 
 // Favorites Only Filter
 favoritesCheckbox.addEventListener('change', () => {
@@ -2234,25 +2172,6 @@ favoritesCheckbox.addEventListener('change', () => {
     const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
     currentDisplayCount = batchSize;
     filterAndRenderMaps();
-});
-
-performanceToggle.addEventListener('click', () => {
-    isLowQualityMode = !isLowQualityMode;
-    document.body.classList.toggle('low-quality', isLowQualityMode);
-    performanceToggle.classList.toggle('active', isLowQualityMode);
-    performanceToggle.textContent = isLowQualityMode ? 'High Quality Mode' : 'Low Quality Mode';
-    
-    try {
-        localStorage.setItem('soundSpaceLowQuality', isLowQualityMode.toString());
-    } catch (e) {}
-    
-    if (maps.length > 0) {
-        renderMaps();
-    }
-    
-    if (isLowQualityMode && window.mapDataManager) {
-        window.mapDataManager.clearCache();
-    }
 });
 
 try {
@@ -2563,40 +2482,6 @@ async function loadMapDataFromJSON() {
     }
 }
 
-function parseMapData(rawData) {
-    if (!rawData || typeof rawData !== 'string') {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    const firstCommaIndex = rawData.indexOf(',');
-    if (firstCommaIndex === -1) {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    const notesData = rawData.substring(firstCommaIndex + 1);
-    const noteArray = notesData.split(',');
-    const noteCount = noteArray.length;
-    
-    if (noteCount === 0) {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    try {
-        const firstNote = noteArray[0];
-        const firstNoteParts = firstNote.split('|');
-        const startTime = parseFloat(firstNoteParts[2]) || 0;
-        
-        const lastNote = noteArray[noteArray.length - 1];
-        const lastNoteParts = lastNote.split('|');
-        const endTime = parseFloat(lastNoteParts[2]) || 0;
-        
-        const durationMilliseconds = endTime - startTime;
-        return { duration: Math.max(0, durationMilliseconds), noteCount: noteCount };
-    } catch (error) {
-        return { duration: 0, noteCount: noteCount };
-    }
-}
-
 function formatDuration(milliseconds) {
     if (milliseconds <= 0 || isNaN(milliseconds)) return "0:00";
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -2740,13 +2625,6 @@ newMapsCheckbox.addEventListener('change', () => {
     filterAndRenderMaps();
 });
 
-newMapsCheckbox.addEventListener('change', () => {
-    showNewMapsOnly = newMapsCheckbox.checked;
-    const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
-    currentDisplayCount = batchSize;
-    filterAndRenderMaps();
-});
-
 document.querySelectorAll('#difficulty-filters .filter-button').forEach(button => {
     button.addEventListener('click', () => {
         const difficulty = button.dataset.filter;
@@ -2851,353 +2729,4 @@ function isApmMap(artist) {
 
 function getRawUrl(url) {
     if (url.includes('github.com')) {
-        let newUrl = url.replace('github.com', 'raw.githubusercontent.com');
-        newUrl = newUrl.replace('/blob/', '/').replace('/raw/', '/');
-        return newUrl;
-    }
-    if (url.includes('gitlab.com') && url.includes('/-/blob/')) {
-        return url.replace('/-/blob/', '/-/raw/');
-    }
-    return url;
-}
-
-function filterAndRenderMaps() {
-    const searchText = searchBar.value.toLowerCase();
-    
-    filteredMaps = maps.filter(m => {
-        const matchesSearch = m.mapName.toLowerCase().includes(searchText) || 
-                            m.artist.toLowerCase().includes(searchText) || 
-                            m.mapper.toLowerCase().includes(searchText) ||
-                            m.link.toLowerCase().includes(searchText);
-        
-        const matchesDifficulty = selectedDifficulties.length === 0 || selectedDifficulties.includes(m.difficulty);
-        const matchesPatterns = selectedPatterns.length === 0 || selectedPatterns.every(pattern => m.patterns.includes(pattern));
-        
-        const isApm = isApmMap(m.artist);
-        let matchesApm = true;
-        if (apmFilter === "only") {
-            matchesApm = isApm;
-        } else if (apmFilter === "none") {
-            matchesApm = !isApm;
-        }
-
-        const mapDuration = m.duration || 0;
-        const mapNotes = m.noteCount || 0;
-        
-        const matchesDuration = mapDuration >= currentDurationRange.min && mapDuration <= currentDurationRange.max;
-        const matchesNotes = mapNotes >= currentNotesRange.min && mapNotes <= currentNotesRange.max;
-        const matchesNewFilter = !showNewMapsOnly || m.isNew;
-        const matchesFavoritesFilter = !showFavoritesOnly || favoritesManager.isFavorite(m);
-
-        return matchesSearch && matchesDifficulty && matchesPatterns && matchesApm && 
-               matchesDuration && matchesNotes && matchesNewFilter && matchesFavoritesFilter;
-    });
-
-    filteredMaps.sort((a, b) => {
-        // Favorites always first
-        const aFav = favoritesManager.isFavorite(a);
-        const bFav = favoritesManager.isFavorite(b);
-        if (aFav !== bFav) {
-            return aFav ? -1 : 1;
-        }
-        
-        // Apply current sort mode
-        if (currentSortMode === 'star-desc' || currentSortMode === 'star-asc') {
-            const starA = a.starRating || 0;
-            const starB = b.starRating || 0;
-            const starComparison = currentSortMode === 'star-desc' ? starB - starA : starA - starB;
-            if (starComparison !== 0) {
-                return starComparison;
-            }
-        } else if (currentSortMode === 'difficulty-asc' || currentSortMode === 'difficulty-desc') {
-            const diffA = difficultyOrder.indexOf(a.difficulty);
-            const diffB = difficultyOrder.indexOf(b.difficulty);
-            const safeA = diffA === -1 ? difficultyOrder.length : diffA;
-            const safeB = diffB === -1 ? difficultyOrder.length : diffB;
-            const difficultyComparison = currentSortMode === 'difficulty-asc' ? safeA - safeB : safeB - safeA;
-            if (difficultyComparison !== 0) {
-                return difficultyComparison;
-            }
-        }
-        
-        if (a.isNew !== b.isNew) {
-            return a.isNew ? -1 : 1;
-        }
-        
-        const artistComparison = a.artist.localeCompare(b.artist);
-        if (artistComparison !== 0) {
-            return artistComparison;
-        }
-        const mapNameComparison = a.mapName.localeCompare(b.mapName);
-        if (mapNameComparison !== 0) {
-            return mapNameComparison;
-        }
-        return a.mapper.localeCompare(b.mapper);
-    });
-
-    renderMaps();
-}
-
-function renderMaps() {
-    mapList.innerHTML = "";
-    const itemsToShow = Math.min(filteredMaps.length, currentDisplayCount);
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < itemsToShow; i++) {
-        const m = filteredMaps[i];
-        const card = createMapCard(m);
-        fragment.appendChild(card);
-    }
-    mapList.appendChild(fragment);
-    updateLoadMoreButton();
-    loadingSpinner.style.display = 'none';
-}
-
-function createMapCard(m) {
-    const card = document.createElement('div');
-    card.classList.add('map-card');
-    let mapDifficulty = m.difficulty.toLowerCase();
-    if (m.difficulty === "No Data") {
-        mapDifficulty = "brrrr";
-    }
-    card.classList.add(mapDifficulty);
-    
-    let newTagHtml = '';
-    if (m.isNew) {
-        newTagHtml = '<div class="new-tag">NEW</div>';
-    }
-
-    const isFavorite = favoritesManager.isFavorite(m);
-    const mapDataJSON = JSON.stringify(m).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    const favoriteHtml = `
-        <button class="favorite-btn ${isFavorite ? 'favorited' : ''}" onclick="toggleFavorite(this, event)" data-map="${mapDataJSON}">
-            <span class="heart-outline">♡</span>
-            <span class="heart-filled">♥</span>
-            <span class="favorite-tooltip">${isFavorite ? 'Favorited!' : 'Favorite?'}</span>
-        </button>
-    `;
-
-    let mapStatsHtml = '';
-    if (!isLowQualityMode) {
-        if (m.duration !== undefined && m.noteCount !== undefined) {
-            mapStatsHtml = `
-                <div class="map-stats">
-                    <div class="map-stat-item">
-                        <img src="Clock.png" alt="Timer Icon">
-                        <span>${formatDuration(m.duration)}</span>
-                    </div>
-                    <div class="map-stat-item">
-                        <img src="Note.png" alt="Notes Icon">
-                        <span>${m.noteCount.toLocaleString()}</span>
-                    </div>
-                </div>
-            `;
-        } else {
-            mapStatsHtml = `
-                <div class="map-stats">
-                    <div class="map-stat-item">
-                        <img src="Clock.png" alt="Timer Icon">
-                        <span>--:--</span>
-                    </div>
-                    <div class="map-stat-item">
-                        <img src="Note.png" alt="Notes Icon">
-                        <span>----</span>
-                    </div>
-                </div>
-            `;
-        }
-    } else {
-        mapStatsHtml = `
-            <div class="map-stats">
-                <div class="map-stat-item">
-                    <span style="color: #ccc; font-size: 0.8em;">Stats disabled in Low Quality Mode</span>
-                </div>
-            </div>
-        `;
-    }
-
-    let patternsHtml = '';
-    if (m.patterns && m.patterns.length > 0) {
-        const patternListHtml = m.patterns.map(p => {
-            const patternName = p === "No Data" ? "No Pattern Data" : p;
-            return `<li>${patternName}</li>`;
-        }).join('');
-        patternsHtml = `
-            <div class="patterns-dropdown-container">
-                <button class="patterns-dropdown-toggle" onclick="togglePatternsDropdown(this)">Show Patterns</button>
-                <div class="patterns-dropdown-menu">
-                    <ul>
-                        ${patternListHtml}
-                    </ul>
-                </div>
-            </div>
-        `;
-    } else {
-        patternsHtml = `
-            <div class="patterns-dropdown-container">
-                <button class="patterns-dropdown-toggle no-click">No Patterns</button>
-            </div>
-        `;
-    }
-
-    const escapedLink = m.link.replace(/'/g, "\\'");
-    const starRatingHtml = createStarRating(m.starRating);
-    const formattedArtistName = formatArtistName(m.artist);
-    const copyCount = copyCounterManager.getCopyCount(m);
-    const mapDataForCopy = encodeURIComponent(JSON.stringify(m));
-    
-    card.innerHTML = `
-        ${newTagHtml}
-        ${favoriteHtml}
-        <div class="map-content">
-            <div class="map-artist">
-                ${starRatingHtml}
-                <span class="artist-name">${formattedArtistName}</span>
-            </div>
-            <div class="map-name"><a href="${m.link}" target="_blank" rel="noopener">${m.mapName}</a></div>
-            <div class="map-mapper">Mapped by: ${m.mapper}</div>
-            <div class="map-difficulty">Difficulty: ${m.difficulty}</div>
-            ${mapStatsHtml}
-        </div>
-        <div class="map-footer">
-            ${patternsHtml}
-            <div class="action-buttons">
-                <button class="copy-btn" onclick="copyLinkFromCard('${escapedLink}', this, '${mapDataForCopy}')">
-                    Copy Link
-                    ${copyCount > 0 ? '<div class="copy-count">' + copyCount + ' copies</div>' : ''}
-                </button>
-                <div class="action-dropdown">
-                    <button class="action-dropdown-toggle" onclick="toggleActionDropdown(this)">&#x22EE;</button>
-                    <div class="action-dropdown-menu">
-                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); copyRawFromCard('${escapedLink}', '${mapDataForCopy}')">Copy Raw</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    return card;
-}
-
-function copyLinkFromCard(link, button, encodedMapData) {
-    const mapData = JSON.parse(decodeURIComponent(encodedMapData));
-    copyLink(link, button, mapData);
-}
-
-function copyRawFromCard(link, encodedMapData) {
-    const mapData = JSON.parse(decodeURIComponent(encodedMapData));
-    copyRawData(link, mapData);
-}
-
-function toggleFavorite(button, event) {
-    event.stopPropagation();
-    const mapData = JSON.parse(button.getAttribute('data-map'));
-    const isFavorited = favoritesManager.toggleFavorite(mapData);
-    
-    button.classList.toggle('favorited', isFavorited);
-    const tooltip = button.querySelector('.favorite-tooltip');
-    tooltip.textContent = isFavorited ? 'Favorited!' : 'Favorite?';
-    
-    showPopup(isFavorited ? 'Added to favorites!' : 'Removed from favorites!', false);
-    
-    if (showFavoritesOnly && !isFavorited) {
-        const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
-        currentDisplayCount = batchSize;
-        filterAndRenderMaps();
-    }
-}
-
-async function copyLink(link, button, mapData) {
-    try {
-        await navigator.clipboard.writeText(link);
-        button.classList.add("copied");
-        const originalText = button.innerHTML;
-        
-        const newCount = await copyCounterManager.incrementCopyCount(mapData);
-        
-        button.innerHTML = "Copied!";
-        showPopup("Link copied!", false);
-        
-        setTimeout(() => {
-            button.classList.remove("copied");
-            button.innerHTML = `Copy Link${newCount > 0 ? `<div class="copy-count">${newCount} copies</div>` : ''}`;
-        }, 1000);
-    } catch (err) {
-        showPopup("Failed to copy link.", true);
-    }
-}
-
-async function copyRawData(link, mapData) {
-    try {
-        const rawLink = getRawUrl(link);
-        let rawContent = null;
-        
-        if (window.mapDataManager && window.mapDataManager.mapDataCache) {
-            rawContent = window.mapDataManager.mapDataCache.get(rawLink);
-        }
-        
-        if (!rawContent) {
-            rawContent = await fetchMapData(rawLink);
-            
-            if (rawContent && window.mapDataManager && window.mapDataManager.mapDataCache) {
-                window.mapDataManager.mapDataCache.set(rawLink, rawContent);
-            }
-        }
-        
-        if (rawContent) {
-            await navigator.clipboard.writeText(rawContent);
-            const newCount = await copyCounterManager.incrementCopyCount(mapData);
-            showPopup("Raw data copied!", false);
-        } else {
-            showPopup("Failed to fetch raw data.", true);
-        }
-    } catch (error) {
-        console.error("Error copying raw data:", error);
-        showPopup("Failed to copy raw data.", true);
-    }
-}
-
-function togglePatternsDropdown(button) {
-    if (button.classList.contains('no-click')) {
-        return;
-    }
-    
-    const dropdownMenu = button.nextElementSibling;
-    dropdownMenu.classList.toggle('show');
-    const allMenus = document.querySelectorAll('.patterns-dropdown-menu, .action-dropdown-menu');
-    allMenus.forEach(menu => {
-        if (menu !== dropdownMenu) {
-            menu.classList.remove('show');
-        }
-    });
-}
-
-function toggleActionDropdown(button) {
-    const dropdownMenu = button.nextElementSibling;
-    dropdownMenu.classList.toggle('show');
-    const allMenus = document.querySelectorAll('.patterns-dropdown-menu, .action-dropdown-menu');
-    allMenus.forEach(menu => {
-        if (menu !== dropdownMenu) {
-            menu.classList.remove('show');
-        }
-    });
-}
-
-document.addEventListener('click', (event) => {
-    if (!event.target.closest('.patterns-dropdown-container') && !event.target.closest('.action-dropdown')) {
-        document.querySelectorAll('.patterns-dropdown-menu, .action-dropdown-menu').forEach(menu => {
-            menu.classList.remove('show');
-        });
-    }
-});
-
-setInterval(() => {
-    if (window.mapDataManager && window.mapDataManager.mapDataCache.size > 1000) {
-        window.mapDataManager.clearCache();
-    }
-}, 300000);
-
-document.addEventListener("DOMContentLoaded", () => {
-    loadMapDataFromJSON();
-});
-</script>
-</body>
-</html>
+        let newUrl = url.replace('github
