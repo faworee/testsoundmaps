@@ -283,8 +283,27 @@ h1 {
     background: linear-gradient(90deg, #17a2b8, #138496);
 }
 
+#open-log-btn {
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(90deg, #ea82ff, #6b2868);
+}
+
 @media (max-width: 768px) {
     #filter-toggle {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    #open-log-btn {
         padding: 10px 16px;
         font-size: 0.9em;
     }
@@ -416,7 +435,6 @@ h1 {
 }
 
 .filter-section h3 {
-    background: linear-gradient(90deg, #4facfe, #f093fb);
     font-size: 1.1em;
     margin-bottom: 10px;
 }
@@ -1408,11 +1426,11 @@ h1 {
 <body>
 <div class="header-container">
     <div class="header-left">
-        <a href="/SoundSpaceCustoms/Info" class="header-button info-button">Info</a>
+        <a href="#" class="header-button info-button">Info</a>
         <button class="header-button random-button" id="random-map-btn">Copy Random Map</button>
     </div>
     <div class="header-right">
-        <a href="https://faworee.github.io/SoundSpaceCustoms/SubmitMaps" class="header-button discord-button">Submit Map</a>
+        <a href="#" class="header-button discord-button">Submit Map</a>
         <div class="settings-dropdown">
             <button class="settings-toggle" id="settings-toggle">⚙ Settings</button>
             <div class="settings-menu" id="settings-menu">
@@ -1547,6 +1565,73 @@ h1 {
                 <div class="sort-option" id="sort-star-low" data-mode="star-asc">★ Low → High</div>
             </div>
         </div>
+
+        <button class="header-button" id="open-log-btn">Update log</button>
+    </div>
+</div>
+
+<div id="change-log-overlay" style="
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    transition: opacity 0.3s, visibility 0.3s;
+"></div>
+
+<div id="change-log-panel" style="
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+    height: 80vh;
+    width: 90%;
+    max-width: 600px;
+    background: #f8f9fa;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    z-index: 50;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s;
+">
+    <div style="
+        padding: 20px;
+        background: white;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    ">
+        <h2 style="
+            margin: 0;
+            font-size: 1.5em;
+            color: #5865F2;
+            background: none;
+            -webkit-text-fill-color: initial;
+        ">Change Log</h2>
+        <button id="close-log-btn" style="
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+            transition: color 0.2s;
+        " onmouseover="this.style.color='#5865F2'" onmouseout="this.style.color='#666'">✕</button>
+    </div>
+
+    <div id="log-content" style="
+        padding: 20px;
+        overflow-y: auto;
+        flex-grow: 1;
+        background: #f8f9fa;
+    ">
+        <p style="text-align: center; color: #666;">Loading change history...</p>
     </div>
 </div>
 
@@ -1615,58 +1700,6 @@ class FavoritesManager {
         return this.favorites.size;
     }
 }
-
-class CopyCounterManager {
-    constructor() {
-        this.copyCounts = {};
-        this.loadCopyCounts();
-    }
-
-    async loadCopyCounts() {
-        try {
-            const response = await fetch('MapCopies.json?v=' + Date.now());
-            if (response.ok) {
-                this.copyCounts = await response.json();
-            }
-        } catch (e) {
-            console.warn('Failed to load copy counts:', e);
-        }
-    }
-
-    getMapId(map) {
-        return `${map.mapName}${map.artist}${map.mapper}${map.noteCount || 0}`;
-    }
-
-    getCopyCount(map) {
-        const id = this.getMapId(map);
-        return this.copyCounts[id] || 0;
-    }
-
-    async incrementCopyCount(map) {
-        const id = this.getMapId(map);
-        this.copyCounts[id] = (this.copyCounts[id] || 0) + 1;
-        
-        try {
-            await fetch('update_copy_count.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: id,
-                    count: this.copyCounts[id]
-                })
-            });
-        } catch (e) {
-            console.warn('Failed to update copy count on server:', e);
-        }
-        
-        return this.copyCounts[id];
-    }
-}
-
-const favoritesManager = new FavoritesManager();
-const copyCounterManager = new CopyCounterManager();
 
 class MapDataManager {
     constructor() {
@@ -1943,6 +1976,7 @@ class MapDataManager {
     }
 }
 
+const favoritesManager = new FavoritesManager();
 let isLowQualityMode = false;
 const difficultyOrder = ["Easy", "Medium", "Hard", "Logic", "Brrrr", "Tasukete"];
 let currentSortMode = 'difficulty-asc'; 
@@ -2052,11 +2086,11 @@ document.addEventListener('click', (e) => {
 document.querySelector('.sort-option[data-mode="difficulty-asc"]').classList.add('active');
 
 randomMapBtn.addEventListener('click', () => {
-    if (maps.length === 0) {
-        showPopup('No maps available!', true);
+    if (filteredMaps.length === 0) {
+        showPopup('No maps match your current filters!', true);
         return;
     }
-    const randomMap = maps[Math.floor(Math.random() * maps.length)];
+    const randomMap = filteredMaps[Math.floor(Math.random() * filteredMaps.length)];
     copyLink(randomMap.link, randomMapBtn, randomMap); 
 });
 
@@ -2316,7 +2350,7 @@ async function loadMapDataFromJSON() {
         let mapData;
         const cacheKey = "soundSpaceMapCache";
         const cacheTimeKey = "soundSpaceMapCacheTime";
-        const cacheDuration = 1000 * 60 * 30;
+        const cacheDuration = 1000 * 30;
 
         const now = Date.now();
         const cached = localStorage.getItem(cacheKey);
@@ -2396,40 +2430,6 @@ async function loadMapDataFromJSON() {
     }
 }
 
-function parseMapData(rawData) {
-    if (!rawData || typeof rawData !== 'string') {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    const firstCommaIndex = rawData.indexOf(',');
-    if (firstCommaIndex === -1) {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    const notesData = rawData.substring(firstCommaIndex + 1);
-    const noteArray = notesData.split(',');
-    const noteCount = noteArray.length;
-    
-    if (noteCount === 0) {
-        return { duration: 0, noteCount: 0 };
-    }
-    
-    try {
-        const firstNote = noteArray[0];
-        const firstNoteParts = firstNote.split('|');
-        const startTime = parseFloat(firstNoteParts[2]) || 0;
-        
-        const lastNote = noteArray[noteArray.length - 1];
-        const lastNoteParts = lastNote.split('|');
-        const endTime = parseFloat(lastNoteParts[2]) || 0;
-        
-        const durationMilliseconds = endTime - startTime;
-        return { duration: Math.max(0, durationMilliseconds), noteCount: noteCount };
-    } catch (error) {
-        return { duration: 0, noteCount: noteCount };
-    }
-}
-
 function formatDuration(milliseconds) {
     if (milliseconds <= 0 || isNaN(milliseconds)) return "0:00";
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -2445,27 +2445,6 @@ function parseTimeToMilliseconds(timeString) {
     const mins = parseInt(parts[0]) || 0;
     const secs = parseInt(parts[1]) || 0;
     return (mins * 60 + secs) * 1000;
-}
-
-async function fetchMapData(url) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-    
-    try {
-        const response = await fetch(url, {
-            signal: controller.signal,
-            cache: 'default' 
-        });
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.text();
-    } catch (error) {
-        clearTimeout(timeoutId);
-        return null;
-    }
 }
 
 let scrollTimeout;
@@ -2560,12 +2539,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('touchstart', (e) => {
-    if (!filterToggle.contains(e.target) && !filterMenu.contains(e.target)) {
-        filterMenu.classList.remove('show');
-    }
-});
-
 newMapsCheckbox.addEventListener('change', () => {
     showNewMapsOnly = newMapsCheckbox.checked;
     const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
@@ -2622,7 +2595,7 @@ document.querySelector('.clear-filters').addEventListener('click', () => {
     apmFilter = "all";
     showNewMapsOnly = false;
     showFavoritesOnly = false;
-    currentDurationRange = { min: 0, max: 300000 };
+    currentDurationRange = { min: 0, max: 600000 };
     currentNotesRange = { min: 0, max: 10000 };
     
     document.querySelectorAll('.filter-button.active').forEach(btn => {
@@ -2638,7 +2611,7 @@ document.querySelector('.clear-filters').addEventListener('click', () => {
         durationTrack.style.left = '0%';
         durationTrack.style.width = '100%';
         durationMinInput.value = '0:00';
-        durationMaxInput.value = '5:00';
+        durationMaxInput.value = formatDuration(durationRange.max);
     }
     
     if (notesMinThumb) {
@@ -2647,7 +2620,7 @@ document.querySelector('.clear-filters').addEventListener('click', () => {
         notesTrack.style.left = '0%';
         notesTrack.style.width = '100%';
         notesMinInput.value = '0';
-        notesMaxInput.value = '10000';
+        notesMaxInput.value = Math.round(notesRange.max);
     }
     
     const batchSize = isLowQualityMode ? LOAD_BATCH_SIZE * 2 : LOAD_BATCH_SIZE;
@@ -2805,11 +2778,11 @@ function createMapCard(m) {
             mapStatsHtml = `
                 <div class="map-stats">
                     <div class="map-stat-item">
-                        <img src="Clock.png" alt="Timer Icon">
+                        <span>⏱️</span>
                         <span>${formatDuration(m.duration)}</span>
                     </div>
                     <div class="map-stat-item">
-                        <img src="Note.png" alt="Notes Icon">
+                        <span>🎵</span>
                         <span>${m.noteCount.toLocaleString()}</span>
                     </div>
                 </div>
@@ -2818,11 +2791,11 @@ function createMapCard(m) {
             mapStatsHtml = `
                 <div class="map-stats">
                     <div class="map-stat-item">
-                        <img src="Clock.png" alt="Timer Icon">
+                        <span>⏱️</span>
                         <span>--:--</span>
                     </div>
                     <div class="map-stat-item">
-                        <img src="Note.png" alt="Notes Icon">
+                        <span>🎵</span>
                         <span>----</span>
                     </div>
                 </div>
@@ -2933,26 +2906,7 @@ async function copyLink(link, button, mapData) {
 async function copyRawData(link, mapData) {
     try {
         const rawLink = getRawUrl(link);
-        let rawContent = null;
-        
-        if (window.mapDataManager && window.mapDataManager.mapDataCache) {
-            rawContent = window.mapDataManager.mapDataCache.get(rawLink);
-        }
-        
-        if (!rawContent) {
-            rawContent = await fetchMapData(rawLink);
-            
-            if (rawContent && window.mapDataManager && window.mapDataManager.mapDataCache) {
-                window.mapDataManager.mapDataCache.set(rawLink, rawContent);
-            }
-        }
-        
-        if (rawContent) {
-            await navigator.clipboard.writeText(rawContent);
-            showPopup("Raw data copied!", false);
-        } else {
-            showPopup("Failed to fetch raw data.", true);
-        }
+        showPopup("Raw data functionality requires actual map files", true);
     } catch (error) {
         showPopup("Failed to copy raw data.", true);
     }
@@ -2992,14 +2946,130 @@ document.addEventListener('click', (event) => {
     }
 });
 
-setInterval(() => {
-    if (window.mapDataManager && window.mapDataManager.mapDataCache.size > 1000) {
-        window.mapDataManager.clearCache();
+function initChangeLog() {
+    const changeLogData = [
+        {
+            version: "1.3.0 - November Release",
+            date: "2025-11-09",
+            changes: [
+                "Added this change log panel to keep users informed about updates.",
+                "Added 10+ New maps from the community.",
+                "Improved UI responsiveness on mobile devices.",
+                "Fixed random map button to respect active filters."
+            ]
+        },
+        {
+            version: "1.2 - Hotfix",
+            date: "2025-09-28",
+            changes: [
+                "Added 10+ New Maps from the community.",
+                "Fixed Favorites not saving issue.",
+                "Improved performance of the map loading process."
+            ]
+        },
+        {
+            version: "1.1.0 - Star Rating Feature",
+            date: "2025-08-10",
+            changes: [
+                "Star Rating has been added",
+                "Few maps were also added"
+            ]
+        }
+    ];
+
+    function renderChangeLog() {
+        const container = document.getElementById('log-content');
+        container.innerHTML = '';
+
+        changeLogData.forEach(log => {
+            const logEntry = document.createElement('div');
+            logEntry.style.cssText = `
+                margin-bottom: 20px;
+                padding: 15px;
+                background: white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                border-radius: 10px;
+                border-left: 4px solid #5865F2;
+            `;
+
+            const header = document.createElement('h3');
+            header.style.cssText = `
+                margin: 0 0 5px 0;
+                font-size: 1.1em;
+                color: #5865F2;
+                background: none;
+                -webkit-text-fill-color: initial;
+            `;
+            header.textContent = log.version;
+
+            const dateP = document.createElement('p');
+            dateP.style.cssText = `
+                margin: 0 0 10px 0;
+                font-size: 0.85em;
+                color: #666;
+            `;
+            dateP.textContent = `Released: ${log.date}`;
+
+            const ul = document.createElement('ul');
+            ul.style.cssText = `
+                margin: 10px 0 0 0;
+                padding-left: 20px;
+                color: #333;
+            `;
+
+            log.changes.forEach(changeText => {
+                const li = document.createElement('li');
+                li.style.cssText = `
+                    margin-bottom: 5px;
+                    font-size: 0.9em;
+                    line-height: 1.4;
+                `;
+                li.textContent = changeText;
+                ul.appendChild(li);
+            });
+
+            logEntry.appendChild(header);
+            logEntry.appendChild(dateP);
+            logEntry.appendChild(ul);
+            container.appendChild(logEntry);
+        });
     }
-}, 300000);
+
+    function toggleChangeLog() {
+        const overlay = document.getElementById('change-log-overlay');
+        const panel = document.getElementById('change-log-panel');
+        
+        const isOpen = overlay.style.visibility === 'visible';
+        
+        if (isOpen) {
+            overlay.style.visibility = 'hidden';
+            overlay.style.opacity = '0';
+            panel.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            panel.style.opacity = '0';
+            panel.style.visibility = 'hidden';
+        } else {
+            overlay.style.visibility = 'visible';
+            overlay.style.opacity = '1';
+            panel.style.transform = 'translate(-50%, -50%) scale(1)';
+            panel.style.opacity = '1';
+            panel.style.visibility = 'visible';
+        }
+    }
+
+    renderChangeLog();
+    
+    document.getElementById('open-log-btn').addEventListener('click', toggleChangeLog);
+    document.getElementById('close-log-btn').addEventListener('click', toggleChangeLog);
+    document.getElementById('change-log-overlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            toggleChangeLog();
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     loadMapDataFromJSON();
+    initChangeLog();
 });
 </script>
 </body>
