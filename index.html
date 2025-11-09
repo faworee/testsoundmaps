@@ -14,6 +14,11 @@ body {
     margin: 0;
 }
 
+@media (min-width: 1500px) {
+    body {
+        transform: scale(1);
+    }
+}
 
 .patterns-dropdown-toggle.no-click {
     cursor: default;
@@ -706,6 +711,12 @@ h1 {
     max-width: 1400px;
 }
 
+@media (min-width: 1500px) {
+    #map-list {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1300px;
+    }
+}
 
 @media (max-width: 768px) {
     #map-list {
@@ -2763,17 +2774,17 @@ function createMapCard(m) {
         </button>
     `;
 
-    let mapStatsHtml = '';
+ let mapStatsHtml = '';
     if (!isLowQualityMode) {
         if (m.duration !== undefined && m.noteCount !== undefined) {
             mapStatsHtml = `
                 <div class="map-stats">
                     <div class="map-stat-item">
-                        <span>⏱️</span>
+                        <img src="Clock.png" alt="Timer Icon">
                         <span>${formatDuration(m.duration)}</span>
                     </div>
                     <div class="map-stat-item">
-                        <span>🎵</span>
+                        <img src="Note.png" alt="Notes Icon">
                         <span>${m.noteCount.toLocaleString()}</span>
                     </div>
                 </div>
@@ -2782,11 +2793,11 @@ function createMapCard(m) {
             mapStatsHtml = `
                 <div class="map-stats">
                     <div class="map-stat-item">
-                        <span>⏱️</span>
+                        <img src="Clock.png" alt="Timer Icon">
                         <span>--:--</span>
                     </div>
                     <div class="map-stat-item">
-                        <span>🎵</span>
+                        <img src="Note.png" alt="Notes Icon">
                         <span>----</span>
                     </div>
                 </div>
