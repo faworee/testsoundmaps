@@ -16,7 +16,7 @@ body {
 
 @media (min-width: 1200px) {
     body {
-        transform: scale(0.9);
+        transform: scale(1);
         transform-origin: top center;
     }
 }
@@ -1422,6 +1422,7 @@ h1 {
 }
 </style>
 </head>
+
 <body>
     <div id="change-log-panel" style="
     position: fixed;
@@ -1497,60 +1498,7 @@ h1 {
 </div>
 
 <h1>Sound Space Custom Maps</h1>
-<div id="change-log-panel" style="
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0;
-    visibility: hidden;
-    height: 80vh;
-    width: 90%;
-    max-width: 600px;
-    background: #f8f9fa;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    z-index: 50;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s;
-">
-    <div style="
-        padding: 20px;
-        background: white;
-        border-bottom: 1px solid #e0e0e0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    ">
-        <h2 style="
-            margin: 0;
-            font-size: 1.5em;
-            color: #5865F2;
-            background: none;
-            -webkit-text-fill-color: initial;
-        ">Change Log</h2>
-        <button id="close-log-btn" style="
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #666;
-            padding: 5px;
-            transition: color 0.2s;
-        " onmouseover="this.style.color='#5865F2'" onmouseout="this.style.color='#666'">✕</button>
-    </div>
 
-    <div id="log-content" style="
-        padding: 20px;
-        overflow-y: auto;
-        flex-grow: 1;
-        background: #f8f9fa;
-    ">
-        <p style="text-align: center; color: #666;">Loading change history...</p>
-    </div>
-</div>
 <div id="search-container">
     <input type="text" id="search-bar" placeholder="Search maps, artists, mappers or GitHub links...">
     
