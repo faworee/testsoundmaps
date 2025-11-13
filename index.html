@@ -1661,7 +1661,6 @@ h1 {
             imagesFetched = true;
             console.log(`Loaded ${IMAGE_FILES.length} images for Nate confetti effect`);
         } catch (error) {
-            console.error('Failed to fetch Nate images:', error);
             IMAGE_FILES = ['default.png'];
         }
     }
@@ -1714,13 +1713,11 @@ h1 {
         confettiActive = true;
         await fetchImageList();
         if (IMAGE_FILES.length === 0) {
-            console.warn('No images available for confetti');
             confettiActive = false;
             return;
         }
         checkQualityMode();
-        const particleCount = isLowQuality ? 10 : 50;
-        console.log(`🎉 Nate10993 Easter Egg Activated! Spawning ${particleCount} confetti particles`);
+        const particleCount = isLowQuality ? 25 : 250;
         for (let i = 0; i < particleCount; i++) {
             setTimeout(() => {
                 createConfettiParticle();
@@ -1811,7 +1808,6 @@ h1 {
             childList: true,
             subtree: true
         });
-        console.log('🎵 Nate10993 Easter Egg initialized!');
     }
     
     if (document.readyState === 'loading') {
@@ -1878,9 +1874,9 @@ class FavoritesManager {
 class MapDataManager {
     constructor() {
         this.mapDataCache = new Map();
-        this.batchSize = 25;
-        this.retryAttempts = 3;
-        this.retryDelay = 1000;
+        this.batchSize = 75;
+        this.retryAttempts = 2;
+        this.retryDelay = 100;
         this.loadingProgress = { loaded: 0, total: 0 };
     }
 
@@ -3281,5 +3277,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
