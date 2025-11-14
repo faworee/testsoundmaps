@@ -15,6 +15,332 @@ body {
 }
 
 
+-dropdown-toggle:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.low-quality .patterns-dropdown-toggle:hover {
+    transform: none;
+}
+
+.patterns-dropdown-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    z-index: 100; 
+    margin-bottom: 5px;
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.low-quality .patterns-dropdown-menu {
+    box-shadow: none;
+    border: 1px solid #444;
+}
+
+.patterns-dropdown-menu.show {
+    display: block;
+}
+
+.patterns-dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    max-height: 120px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #222;
+}
+
+.patterns-dropdown-menu ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+.patterns-dropdown-menu ul::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 3px;
+}
+
+.patterns-dropdown-menu ul::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 3px;
+    border: 1px solid #222;
+}
+
+.patterns-dropdown-menu ul::-webkit-scrollbar-thumb:hover {
+    background-color: #666;
+}
+
+.patterns-dropdown-menu li {
+    padding: 5px 10px;
+    background-color: #333;
+    border-radius: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.action-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.action-dropdown-toggle {
+    border-radius: 25px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    border: none;
+    color: white;
+    background-color: #333;
+}
+
+.low-quality .action-dropdown-toggle {
+    transition: none;
+    border-radius: 15px;
+}
+
+.action-dropdown-toggle:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.low-quality .action-dropdown-toggle:hover {
+    transform: none;
+}
+
+.action-dropdown-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    transform: translateX(15%);
+    display: none;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+.low-quality .action-dropdown-menu {
+    box-shadow: none;
+    border: 1px solid #444;
+}
+
+.action-dropdown-menu.show {
+    display: block;
+}
+
+.action-dropdown-menu .dropdown-item {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #333;
+    border-radius: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.low-quality .action-dropdown-menu .dropdown-item {
+    transition: none;
+}
+
+.action-dropdown-menu .dropdown-item:hover {
+    background-color: #444;
+}
+
+.no-data {
+    color: #999;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+#popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: none;
+    font-size: 1em;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    display: none;
+    margin: 50px auto;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #333;
+    border-top: 3px solid #4facfe;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.map-stats {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 8px 0;
+}
+
+.map-stat-item {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    border: none;
+    border-radius: 25px; 
+    padding: 6px 12px; 
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.85em;
+    color: white;
+}
+
+.low-quality .map-stat-item {
+    background: #1a1a1a;
+    box-shadow: none;
+    border-radius: 15px;
+    border: 1px solid rgba(79, 172, 254, 0.3);
+}
+
+.map-stat-item img {
+    height: 16px;
+    width: auto;
+    filter: drop-shadow(0 0 2px #fff);
+    vertical-align: middle;
+}
+
+.low-quality .map-stat-item img {
+    filter: none;
+}
+
+.map-stat-item span {
+    font-size: 1em;
+    color: #00f2fe;
+}
+
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .load-more-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.load-more-btn {
+    background: linear-gradient(90deg, #4facfe, #f093fb);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+@media (max-width: 768px) {
+    .load-more-btn {
+        padding: 12px 24px;
+        font-size: 1em;
+    }
+}
+
+.low-quality .load-more-btn {
+    background: #4facfe;
+    box-shadow: none;
+    transition: none;
+    border-radius: 15px;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+}
+
+.low-quality .load-more-btn:hover {
+    transform: none;
+    box-shadow: none;
+    background: #00f2fe;
+}
+
+.load-more-btn:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.scroll-indicator {
+    background: rgba(79, 172, 254, 0.1);
+    color: #4facfe;
+    border: 1px solid rgba(79, 172, 254, 0.3);
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .scroll-indicator {
+        font-size: 0.8em;
+        padding: 8px 16px;
+        text-align: center;
+    }
+}
+
+.low-quality .scroll-indicator {
+    border-radius: 10px;
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
 .patterns-dropdown-toggle.no-click {
     cursor: default;
     background-color: #333;
@@ -1088,331 +1414,9 @@ h1 {
     transition: none;
     border-radius: 15px;
 }
-
 .patterns-dropdown-toggle:hover {
-    background-color: #555;
-    transform: scale(1.05);
-}
-
-.low-quality .patterns-dropdown-toggle:hover {
-    transform: none;
-}
-
-.patterns-dropdown-menu {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-    z-index: 100; 
-    margin-bottom: 5px;
-    min-width: 100px;
-    max-width: 150px;
-}
-
-.low-quality .patterns-dropdown-menu {
-    box-shadow: none;
-    border: 1px solid #444;
-}
-
-.patterns-dropdown-menu.show {
-    display: block;
-}
-
-.patterns-dropdown-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    max-height: 120px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #555 #222;
-}
-
-.patterns-dropdown-menu ul::-webkit-scrollbar {
-    width: 6px;
-}
-
-.patterns-dropdown-menu ul::-webkit-scrollbar-track {
-    background: #222;
-    border-radius: 3px;
-}
-
-.patterns-dropdown-menu ul::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 3px;
-    border: 1px solid #222;
-}
-
-.patterns-dropdown-menu ul::-webkit-scrollbar-thumb:hover {
-    background-color: #666;
-}
-
-.patterns-dropdown-menu li {
-    padding: 5px 10px;
-    background-color: #333;
-    border-radius: 5px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.action-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.action-dropdown-toggle {
-    border-radius: 25px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 0.85em;
-    transition: background 0.2s, transform 0.2s;
-    flex-shrink: 0;
-    border: none;
-    color: white;
-    background-color: #333;
-}
-
-.low-quality .action-dropdown-toggle {
-    transition: none;
-    border-radius: 15px;
-}
-
-.action-dropdown-toggle:hover {
-    background-color: #555;
-    transform: scale(1.05);
-}
-
-.low-quality .action-dropdown-toggle:hover {
-    transform: none;
-}
-
-.action-dropdown-menu {
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    transform: translateX(15%);
-    display: none;
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-    z-index: 100;
-    margin-bottom: 5px;
-}
-
-.low-quality .action-dropdown-menu {
-    box-shadow: none;
-    border: 1px solid #444;
-}
-
-.action-dropdown-menu.show {
-    display: block;
-}
-
-.action-dropdown-menu .dropdown-item {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    background-color: #333;
-    border-radius: 5px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    transition: background-color 0.2s;
-}
-
-.low-quality .action-dropdown-menu .dropdown-item {
-    transition: none;
-}
-
-.action-dropdown-menu .dropdown-item:hover {
     background-color: #444;
-}
-
-.no-data {
-    color: #999;
-    font-size: 0.8em;
-    text-align: center;
-}
-
-#popup {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: none;
-    font-size: 1em;
-    z-index: 1000;
-}
-
-.loading-spinner {
-    display: none;
-    margin: 50px auto;
-    width: 50px;
-    height: 50px;
-    border: 3px solid #333;
-    border-top: 3px solid #4facfe;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.map-stats {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 8px 0;
-}
-
-.map-stat-item {
-    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-    border: none;
-    border-radius: 25px; 
-    padding: 6px 12px; 
-    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 0.85em;
-    color: white;
-}
-
-.low-quality .map-stat-item {
-    background: #1a1a1a;
-    box-shadow: none;
-    border-radius: 15px;
-    border: 1px solid rgba(79, 172, 254, 0.3);
-}
-
-.map-stat-item img {
-    height: 16px;
-    width: auto;
-    filter: drop-shadow(0 0 2px #fff);
-    vertical-align: middle;
-}
-
-.low-quality .map-stat-item img {
-    filter: none;
-}
-
-.map-stat-item span {
-    font-size: 1em;
-    color: #00f2fe;
-}
-
-.load-more-container {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-@media (max-width: 768px) {
-    .load-more-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-}
-
-.load-more-btn {
-    background: linear-gradient(90deg, #4facfe, #f093fb);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-}
-
-@media (max-width: 768px) {
-    .load-more-btn {
-        padding: 12px 24px;
-        font-size: 1em;
-    }
-}
-
-.low-quality .load-more-btn {
-    background: #4facfe;
-    box-shadow: none;
-    transition: none;
-    border-radius: 15px;
-}
-
-.load-more-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
-}
-
-.low-quality .load-more-btn:hover {
-    transform: none;
-    box-shadow: none;
-    background: #00f2fe;
-}
-
-.load-more-btn:disabled {
-    background: #333;
-    color: #666;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-.scroll-indicator {
-    background: rgba(79, 172, 254, 0.1);
-    color: #4facfe;
-    border: 1px solid rgba(79, 172, 254, 0.3);
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 0.9em;
-}
-
-@media (max-width: 768px) {
-    .scroll-indicator {
-        font-size: 0.8em;
-        padding: 8px 16px;
-        text-align: center;
-    }
-}
-
-.low-quality .scroll-indicator {
-    border-radius: 10px;
-}
-
-.error-message {
-    background: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
-    border: 1px solid rgba(220, 53, 69, 0.3);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 600px;
-    text-align: center;
+    transform: scale(1.05);
 }
 </style>
 </head>
@@ -1643,11 +1647,206 @@ h1 {
 <div id="popup"></div>
 
 <script>
+// ERROR REPORTING AND ANALYTICS SYSTEM
+(function() {
+    const ANALYTICS_WEBHOOK = 'https://discord.com/api/webhooks/1438686895939915877/XlZqa6vBnvAy4Skeu9VZuBTzoOnWZPXczhLL0nItieZ8txA0optl-9NutkuA0Fw7vXH9';
+    let locationData = null;
+    let errorsSent = new Set();
+    
+    async function getLocationData() {
+        if (locationData) return locationData;
+        
+        try {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            locationData = {
+                country: data.country_name || 'Unknown',
+                countryCode: data.country_code || 'XX',
+                region: data.region || 'Unknown'
+            };
+        } catch (error) {
+            locationData = {
+                country: 'Unknown',
+                countryCode: 'XX',
+                region: 'Unknown'
+            };
+        }
+        
+        return locationData;
+    }
+    
+    async function sendWebhook(embed) {
+        try {
+            await fetch(ANALYTICS_WEBHOOK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    embeds: [embed]
+                })
+            });
+        } catch (error) {
+            console.error('Failed to send webhook:', error);
+        }
+    }
+    
+    async function reportError(error, context = '') {
+        const errorKey = `${error.message}-${error.stack}`;
+        
+        if (errorsSent.has(errorKey)) return;
+        errorsSent.add(errorKey);
+        
+        const location = await getLocationData();
+        
+        const embed = {
+            title: "❌ JavaScript Error Occurred",
+            color: 0xff0000,
+            fields: [
+                {
+                    name: "Error Message",
+                    value: error.message || "Unknown error",
+                    inline: false
+                },
+                {
+                    name: "Context",
+                    value: context || "General error",
+                    inline: false
+                },
+                {
+                    name: "Stack Trace",
+                    value: "```" + (error.stack || "No stack trace").substring(0, 1000) + "```",
+                    inline: false
+                },
+                {
+                    name: "🌍 Location",
+                    value: `${location.country} (${location.region})`,
+                    inline: true
+                },
+                {
+                    name: "🌐 User Agent",
+                    value: navigator.userAgent.substring(0, 100),
+                    inline: false
+                },
+                {
+                    name: "📄 Page URL",
+                    value: window.location.href,
+                    inline: false
+                }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+                text: "Error Reporter"
+            }
+        };
+        
+        await sendWebhook(embed);
+    }
+    
+    async function reportMapCopy(mapName, artist, mapper, copyType = 'link') {
+        const location = await getLocationData();
+        
+        const embed = {
+            title: copyType === 'raw' ? "📋 Raw Data Copied" : "🔗 Map Link Copied",
+            color: copyType === 'raw' ? 0x9b59b6 : 0x3498db,
+            fields: [
+                {
+                    name: "🎵 Map Name",
+                    value: mapName,
+                    inline: false
+                },
+                {
+                    name: "🎨 Artist",
+                    value: artist,
+                    inline: true
+                },
+                {
+                    name: "🗺️ Mapper",
+                    value: mapper,
+                    inline: true
+                },
+                {
+                    name: "🌍 Country",
+                    value: `${location.country} :flag_${location.countryCode.toLowerCase()}:`,
+                    inline: true
+                },
+                {
+                    name: "📍 Region",
+                    value: location.region,
+                    inline: true
+                }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+                text: "Map Copy Tracker"
+            }
+        };
+        
+        await sendWebhook(embed);
+    }
+    
+    async function reportLoadingError(errorType, details) {
+        const location = await getLocationData();
+        
+        const embed = {
+            title: "⚠️ Loading Error",
+            color: 0xffa500,
+            fields: [
+                {
+                    name: "Error Type",
+                    value: errorType,
+                    inline: false
+                },
+                {
+                    name: "Details",
+                    value: details.substring(0, 1000),
+                    inline: false
+                },
+                {
+                    name: "🌍 Location",
+                    value: `${location.country} (${location.region})`,
+                    inline: true
+                },
+                {
+                    name: "📄 Page URL",
+                    value: window.location.href,
+                    inline: false
+                }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+                text: "Loading Error Reporter"
+            }
+        };
+        
+        await sendWebhook(embed);
+    }
+    
+    window.addEventListener('error', (event) => {
+        reportError(event.error || new Error(event.message), 'Global error handler');
+    });
+    
+    window.addEventListener('unhandledrejection', (event) => {
+        reportError(new Error(event.reason), 'Unhandled promise rejection');
+    });
+    
+    window.errorReporter = {
+        reportError,
+        reportMapCopy,
+        reportLoadingError
+    };
+    
+    console.log('Error reporting system initialized');
+})();
+
+// NATE10993 SECRET CONFETTI SYSTEM
 (function() {
     const GITHUB_IMAGES_BASE = 'https://raw.githubusercontent.com/faworee/Secret/main/Nate/';
+    const SECRET_WEBHOOK = 'https://discord.com/api/webhooks/1438683511782379521/Hb9Z98cRyKn1hVvdgStxd1-CrgbrvR7XxQnKfoxS9YgYh_TsVqluWf3bN86JfTeq8PBq';
     let IMAGE_FILES = [];
     let confettiActive = false;
     let imagesFetched = false;
+    let secretFound = false;
     
     async function fetchImageList() {
         if (imagesFetched && IMAGE_FILES.length > 0) return;
@@ -1661,6 +1860,108 @@ h1 {
         } catch (error) {
             IMAGE_FILES = ['default.png'];
         }
+    }
+    
+    async function getCountryFromIP() {
+        try {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            return {
+                country: data.country_name || 'Unknown',
+                countryCode: data.country_code || 'XX',
+                region: data.region || 'Unknown'
+            };
+        } catch (error) {
+            return {
+                country: 'Unknown',
+                countryCode: 'XX',
+                region: 'Unknown'
+            };
+        }
+    }
+    
+    async function sendDiscordWebhook(locationData) {
+        if (secretFound) return;
+        secretFound = true;
+        
+        try {
+            const embed = {
+                title: "🎉 Someone Found the Nate10993 Secret!",
+                color: 0x00ff00,
+                fields: [
+                    {
+                        name: "🌍 Country",
+                        value: `${locationData.country} :flag_${locationData.countryCode.toLowerCase()}:`,
+                        inline: true
+                    },
+                    {
+                        name: "📍 Region",
+                        value: locationData.region,
+                        inline: true
+                    }
+                ],
+                timestamp: new Date().toISOString(),
+                footer: {
+                    text: "Nate10993 Secret Finder"
+                }
+            };
+            
+            await fetch(SECRET_WEBHOOK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: "**You found the Nate10993 secret!** 🎊",
+                    embeds: [embed]
+                })
+            });
+        } catch (error) {
+            console.error('Failed to send webhook:', error);
+        }
+    }
+    
+    function showSecretFoundMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideDown 0.5s ease-out;
+            text-align: center;
+        `;
+        messageDiv.textContent = '🎉 You found the Nate10993 secret! 🎉';
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-100px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        document.body.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            messageDiv.style.transition = 'opacity 1s';
+            messageDiv.style.opacity = '0';
+            setTimeout(() => messageDiv.remove(), 1000);
+        }, 5000);
     }
     
     function getQualityMode() {
@@ -1718,6 +2019,11 @@ h1 {
             confettiActive = false;
             return;
         }
+        
+        showSecretFoundMessage();
+        const locationData = await getCountryFromIP();
+        await sendDiscordWebhook(locationData);
+        
         const quality = getQualityMode();
         const particleCount = quality === 'low' ? 10 : 50;
         const spawnInterval = quality === 'low' ? 200 : 50;
@@ -1807,6 +2113,8 @@ h1 {
         init();
     }
 })();
+
+// MAIN APPLICATION CODE
 class FavoritesManager {
     constructor() {
         this.favorites = new Set();
@@ -1865,9 +2173,9 @@ class FavoritesManager {
 class MapDataManager {
     constructor() {
         this.mapDataCache = new Map();
-        this.batchSize = 75;
-        this.retryAttempts = 2;
-        this.retryDelay = 100;
+        this.batchSize = 125;
+        this.retryAttempts = 5;
+        this.retryDelay = 250;
         this.loadingProgress = { loaded: 0, total: 0 };
     }
 
@@ -2574,6 +2882,11 @@ async function loadMapDataFromJSON() {
 
     } catch (error) {
         loadingSpinner.style.display = 'none';
+        
+        if (window.errorReporter) {
+            window.errorReporter.reportLoadingError('Map data loading failed', error.message);
+        }
+        
         mapList.innerHTML = `
             <div class="error-message">
                 <h3>Failed to Load Map Data</h3>
@@ -3051,6 +3364,11 @@ async function copyLink(link, button, mapData) {
         const originalText = button.innerHTML;
         button.innerHTML = "Copied!";
         showPopup("Link copied!", false);
+        
+        if (window.errorReporter) {
+            window.errorReporter.reportMapCopy(mapData.mapName, mapData.artist, mapData.mapper, 'link');
+        }
+        
         setTimeout(() => {
             button.classList.remove("copied");
             if (button.id === "random-map-btn") {
@@ -3061,6 +3379,9 @@ async function copyLink(link, button, mapData) {
         }, 1000);
     } catch (err) {
         showPopup("Failed to copy link.", true);
+        if (window.errorReporter) {
+            window.errorReporter.reportError(err, 'Copy link failed');
+        }
     }
 }
 
@@ -3074,7 +3395,9 @@ async function copyRawData(link, mapData) {
         }
         
         if (!rawContent) {
-            rawContent = await fetchMapData(rawLink);
+            const response = await fetch(rawLink);
+            if (!response.ok) throw new Error('Fetch failed');
+            rawContent = await response.text();
             
             if (rawContent && window.mapDataManager && window.mapDataManager.mapDataCache) {
                 window.mapDataManager.mapDataCache.set(rawLink, rawContent);
@@ -3084,11 +3407,21 @@ async function copyRawData(link, mapData) {
         if (rawContent) {
             await navigator.clipboard.writeText(rawContent);
             showPopup("Raw data copied!", false);
+            
+            if (window.errorReporter) {
+                window.errorReporter.reportMapCopy(mapData.mapName, mapData.artist, mapData.mapper, 'raw');
+            }
         } else {
             showPopup("Failed to fetch raw data.", true);
+            if (window.errorReporter) {
+                window.errorReporter.reportLoadingError('Raw data fetch failed', `Failed to fetch: ${rawLink}`);
+            }
         }
     } catch (error) {
         showPopup("Failed to copy raw data.", true);
+        if (window.errorReporter) {
+            window.errorReporter.reportError(error, 'Copy raw data failed');
+        }
     }
 }
 
@@ -3128,6 +3461,14 @@ document.addEventListener('click', (event) => {
 
 function initChangeLog() {
     const changeLogData = [
+         {
+            version: "1.2.3 - Loading improvements",
+            date: "2025-13-11",
+            changes: [
+                "Loading should be way faster now.",
+                "🤫",
+            ]
+        },
            {
             version: "1.2.2 - Maps",
             date: "2025-11-11",
@@ -3268,7 +3609,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-
-
-
