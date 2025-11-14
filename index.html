@@ -1422,6 +1422,11 @@ h1 {
 </head>
 
 <body>
+
+<audio id="buttonSound" preload="auto">
+    <source src="button.mp3" type="audio/mpeg">
+</audio>
+
 <div id="change-log-panel" style="
     position: fixed;
     left: 50%;
@@ -1647,8 +1652,8 @@ h1 {
 <div id="popup"></div>
 
 <script>
-// ERROR REPORTING AND ANALYTICS SYSTEM
 (function() {
+    // THIS LOGS ERRORS DONT ABUSE THE WEBHOOK PLEASE
     const ANALYTICS_WEBHOOK = 'https://discord.com/api/webhooks/1438692061418094682/jpGk9hb5-wWS4Gt8Z8-BvU8CToQhhw3DP36pGQs73GPOYvykg9v42jmh3br-lLLojU2Q';
     let locationData = null;
     let errorsSent = new Set();
@@ -1830,6 +1835,27 @@ h1 {
         reportError(new Error(event.reason), 'Unhandled promise rejection');
     });
     
+    const originalConsoleError = console.error;
+    const originalConsoleWarn = console.warn;
+    
+    console.error = function(...args) {
+        originalConsoleError.apply(console, args);
+        const errorMessage = args.map(arg => 
+            typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+        ).join(' ');
+        reportError(new Error(errorMessage), 'Console Error');
+    };
+    
+    console.warn = function(...args) {
+        originalConsoleWarn.apply(console, args);
+        const warnMessage = args.map(arg => 
+            typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+        ).join(' ');
+        if (warnMessage.includes('Failed') || warnMessage.includes('Error')) {
+            reportError(new Error(warnMessage), 'Console Warning');
+        }
+    };
+    
     window.errorReporter = {
         reportError,
         reportMapCopy,
@@ -1839,7 +1865,12 @@ h1 {
     console.log('Error reporting system initialized');
 })();
 
-// NATE10993 SECRET CONFETTI SYSTEM
+function playButtonSound() {
+    const sound = document.getElementById('buttonSound');
+    sound.currentTime = 0;
+    sound.play().catch(err => console.log('Audio play failed:', err));
+}
+
 (function() {
     const GITHUB_IMAGES_BASE = 'https://raw.githubusercontent.com/faworee/Secret/main/Nate/';
     const SECRET_WEBHOOK = 'https://discord.com/api/webhooks/1438683511782379521/Hb9Z98cRyKn1hVvdgStxd1-CrgbrvR7XxQnKfoxS9YgYh_TsVqluWf3bN86JfTeq8PBq';
@@ -2114,7 +2145,6 @@ h1 {
     }
 })();
 
-// MAIN APPLICATION CODE
 class FavoritesManager {
     constructor() {
         this.favorites = new Set();
@@ -3360,6 +3390,7 @@ function copyRawFromCard(link, encodedMapData) {
 async function copyLink(link, button, mapData) {
     try {
         await navigator.clipboard.writeText(link);
+        playButtonSound();
         button.classList.add("copied");
         const originalText = button.innerHTML;
         button.innerHTML = "Copied!";
@@ -3609,4 +3640,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
+
 
